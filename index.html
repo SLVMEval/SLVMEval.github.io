@@ -1,1232 +1,729 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SLVMEval: Synthetic Meta Evaluation Benchmark for Text-to-Long Video Generation</title>
-
-  <!-- Bulma CSS -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css" />
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Code+Pro:wght@400;500&display=swap" rel="stylesheet" />
-
-  <style>
-    :root {
-      --primary: #1a56db;
-      --primary-dark: #1240a8;
-      --primary-light: #eff4ff;
-      --accent: #7c3aed;
-      --accent-light: #f5f3ff;
-      --success: #059669;
-      --warning: #d97706;
-      --text: #111827;
-      --text-secondary: #374151;
-      --muted: #6b7280;
-      --border: #e5e7eb;
-      --bg: #ffffff;
-      --bg-alt: #f9fafb;
-      --radius: 10px;
-      --radius-lg: 16px;
-      --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 4px 16px rgba(0,0,0,0.06);
-      --shadow-lg: 0 8px 24px rgba(0,0,0,0.10), 0 24px 64px rgba(0,0,0,0.08);
-    }
-
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      font-family: 'Inter', sans-serif;
-      color: var(--text);
-      background: var(--bg);
-      line-height: 1.7;
-    }
-
-    /* ── Hero ── */
-    .hero-section {
-      background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #312e81 100%);
-      color: white;
-      padding: 72px 24px 60px;
-      text-align: center;
-    }
-
-    .conference-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: rgba(255,255,255,0.15);
-      backdrop-filter: blur(8px);
-      border: 1px solid rgba(255,255,255,0.25);
-      border-radius: 100px;
-      padding: 6px 16px;
-      font-size: 0.85rem;
-      font-weight: 600;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      margin-bottom: 24px;
-    }
-
-    .paper-title {
-      font-size: clamp(1.8rem, 4vw, 3rem);
-      font-weight: 700;
-      line-height: 1.25;
-      max-width: 860px;
-      margin: 0 auto 12px;
-    }
-
-    .paper-title .highlight {
-      color: #93c5fd;
-    }
-
-    .paper-subtitle {
-      font-size: 1.1rem;
-      color: rgba(255,255,255,0.75);
-      max-width: 640px;
-      margin: 0 auto 32px;
-    }
-
-    .authors-block {
-      margin-bottom: 32px;
-    }
-
-    .authors-block .author-note {
-      color: rgba(255,255,255,0.6);
-      font-size: 0.9rem;
-      margin-top: 6px;
-    }
-
-    .btn-group {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      justify-content: center;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 10px 22px;
-      border-radius: 8px;
-      font-weight: 600;
-      font-size: 0.9rem;
-      text-decoration: none;
-      transition: all 0.2s ease;
-      cursor: pointer;
-      border: none;
-    }
-
-    .btn-white {
-      background: white;
-      color: #1e3a8a;
-    }
-    .btn-white:hover { background: #eff6ff; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
-
-    .btn-outline {
-      background: transparent;
-      color: white;
-      border: 1.5px solid rgba(255,255,255,0.5);
-    }
-    .btn-outline:hover { background: rgba(255,255,255,0.1); border-color: white; transform: translateY(-1px); }
-
-    .btn-coming-soon {
-      background: rgba(255,255,255,0.08);
-      color: rgba(255,255,255,0.5);
-      border: 1.5px dashed rgba(255,255,255,0.3);
-      cursor: default;
-    }
-
-    /* ── Stats Strip ── */
-    .stats-strip {
-      background: var(--primary);
-      padding: 20px 24px;
-    }
-
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 0;
-      max-width: 900px;
-      margin: 0 auto;
-    }
-
-    .stat-item {
-      text-align: center;
-      color: white;
-      padding: 8px 16px;
-      border-right: 1px solid rgba(255,255,255,0.2);
-    }
-    .stat-item:last-child { border-right: none; }
-
-    .stat-value {
-      font-size: 1.6rem;
-      font-weight: 700;
-      line-height: 1.2;
-    }
-
-    .stat-label {
-      font-size: 0.78rem;
-      color: rgba(255,255,255,0.75);
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-    }
-
-    /* ── Sections ── */
-    .section-block {
-      padding: 64px 24px;
-    }
-
-    .section-block.alt {
-      background: var(--bg-alt);
-    }
-
-    .section-inner {
-      max-width: 960px;
-      margin: 0 auto;
-    }
-
-    .section-title {
-      font-size: 1.6rem;
-      font-weight: 700;
-      color: var(--text);
-      margin-bottom: 8px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .section-title .title-icon {
-      width: 36px;
-      height: 36px;
-      border-radius: 8px;
-      background: var(--primary-light);
-      color: var(--primary);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.9rem;
-      flex-shrink: 0;
-    }
-
-    .section-divider {
-      width: 48px;
-      height: 3px;
-      background: var(--primary);
-      border-radius: 2px;
-      margin-bottom: 28px;
-    }
-
-    /* ── Abstract ── */
-    .abstract-text {
-      font-size: 1.05rem;
-      color: var(--text-secondary);
-      line-height: 1.8;
-      background: var(--bg-alt);
-      border-left: 4px solid var(--primary);
-      padding: 24px 28px;
-      border-radius: 0 var(--radius) var(--radius) 0;
-    }
-
-    /* ── Teaser Figure ── */
-    .figure-card {
-      background: white;
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-      box-shadow: var(--shadow);
-      margin: 32px 0;
-    }
-
-    .figure-card img {
-      width: 100%;
-      display: block;
-    }
-
-    .figure-caption {
-      padding: 16px 20px;
-      font-size: 0.88rem;
-      color: var(--muted);
-      border-top: 1px solid var(--border);
-      line-height: 1.6;
-    }
-
-    .figure-caption strong {
-      color: var(--text-secondary);
-    }
-
-    /* ── Highlights ── */
-    .highlights-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 20px;
-      margin-top: 28px;
-    }
-
-    .highlight-card {
-      background: white;
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 24px;
-      box-shadow: var(--shadow);
-      border-top: 3px solid var(--primary);
-    }
-
-    .highlight-card.accent { border-top-color: var(--accent); }
-    .highlight-card.success { border-top-color: var(--success); }
-
-    .highlight-icon {
-      width: 44px;
-      height: 44px;
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.2rem;
-      margin-bottom: 14px;
-    }
-
-    .highlight-icon.blue { background: var(--primary-light); }
-    .highlight-icon.purple { background: var(--accent-light); }
-    .highlight-icon.green { background: #ecfdf5; }
-
-    .highlight-card h3 {
-      font-size: 1rem;
-      font-weight: 700;
-      color: var(--text);
-      margin-bottom: 8px;
-    }
-
-    .highlight-card p {
-      font-size: 0.9rem;
-      color: var(--text-secondary);
-      line-height: 1.65;
-    }
-
-    /* ── Aspects Grid ── */
-    .aspects-container {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 24px;
-      margin-top: 32px;
-    }
-
-    @media (max-width: 640px) {
-      .aspects-container { grid-template-columns: 1fr; }
-    }
-
-    .aspects-group {
-      background: white;
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-      box-shadow: var(--shadow);
-    }
-
-    .aspects-group-header {
-      padding: 16px 20px;
-      font-weight: 700;
-      font-size: 0.95rem;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .aspects-group-header.vq {
-      background: #eff6ff;
-      color: #1e40af;
-      border-bottom: 1px solid #bfdbfe;
-    }
-
-    .aspects-group-header.vtc {
-      background: #f5f3ff;
-      color: #6d28d9;
-      border-bottom: 1px solid #ddd6fe;
-    }
-
-    .aspect-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-      padding: 14px 20px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .aspect-item:last-child { border-bottom: none; }
-
-    .aspect-badge {
-      width: 26px;
-      height: 26px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.75rem;
-      font-weight: 700;
-      flex-shrink: 0;
-      margin-top: 1px;
-    }
-
-    .aspect-badge.vq { background: #dbeafe; color: #1d4ed8; }
-    .aspect-badge.vtc { background: #ede9fe; color: #7c3aed; }
-
-    .aspect-name {
-      font-weight: 600;
-      font-size: 0.9rem;
-      color: var(--text);
-      margin-bottom: 3px;
-    }
-
-    .aspect-desc {
-      font-size: 0.82rem;
-      color: var(--muted);
-      line-height: 1.5;
-    }
-
-    /* ── Results Table ── */
-    .results-table-wrapper {
-      overflow-x: auto;
-      border-radius: var(--radius-lg);
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow);
-      margin-top: 28px;
-    }
-
-    .results-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.82rem;
-      min-width: 800px;
-    }
-
-    .results-table th {
-      background: #1e3a8a;
-      color: white;
-      font-weight: 600;
-      padding: 10px 12px;
-      text-align: center;
-      white-space: nowrap;
-    }
-
-    .results-table th.group-header {
-      background: #1240a8;
-      font-size: 0.78rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-
-    .results-table td {
-      padding: 9px 12px;
-      text-align: center;
-      border-bottom: 1px solid var(--border);
-      white-space: nowrap;
-    }
-
-    .results-table tr:last-child td { border-bottom: none; }
-
-    .results-table td.system-name {
-      text-align: left;
-      font-weight: 500;
-      color: var(--text-secondary);
-      padding-left: 16px;
-    }
-
-    .results-table .category-row td {
-      background: #f8faff;
-      font-weight: 700;
-      font-size: 0.78rem;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: var(--primary);
-      padding: 7px 12px;
-    }
-
-    .results-table tr:hover td { background: #f9fafb; }
-    .results-table .human-row td {
-      background: #f0fdf4;
-      font-weight: 700;
-    }
-    .results-table .human-row td.system-name { color: var(--success); }
-
-    .best { font-weight: 700; color: #1d4ed8; }
-    .second-best { color: #059669; }
-
-    /* ── Comparison Table ── */
-    .comparison-table-wrapper {
-      overflow-x: auto;
-      border-radius: var(--radius-lg);
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow);
-      margin-top: 28px;
-    }
-
-    .comparison-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.88rem;
-    }
-
-    .comparison-table th {
-      background: #f1f5f9;
-      font-weight: 600;
-      color: var(--text-secondary);
-      padding: 11px 16px;
-      text-align: center;
-      border-bottom: 2px solid var(--border);
-    }
-
-    .comparison-table th:first-child { text-align: left; }
-
-    .comparison-table td {
-      padding: 11px 16px;
-      border-bottom: 1px solid var(--border);
-      text-align: center;
-    }
-
-    .comparison-table td:first-child { text-align: left; font-weight: 500; }
-    .comparison-table .ours-row td { background: #eff6ff; font-weight: 600; }
-    .comparison-table .ours-row td:first-child { color: var(--primary); }
-
-    .check { color: var(--success); font-size: 1rem; }
-    .cross { color: #dc2626; font-size: 0.9rem; }
-
-    /* ── Finding Cards ── */
-    .findings-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 20px;
-      margin-top: 28px;
-    }
-
-    .finding-card {
-      background: white;
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 24px;
-      box-shadow: var(--shadow);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .finding-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 3px;
-    }
-
-    .finding-card.blue::before { background: var(--primary); }
-    .finding-card.purple::before { background: var(--accent); }
-    .finding-card.orange::before { background: var(--warning); }
-    .finding-card.green::before { background: var(--success); }
-
-    .finding-number {
-      font-size: 2rem;
-      font-weight: 800;
-      line-height: 1;
-      margin-bottom: 4px;
-    }
-
-    .finding-card.blue .finding-number { color: var(--primary); }
-    .finding-card.purple .finding-number { color: var(--accent); }
-    .finding-card.orange .finding-number { color: var(--warning); }
-    .finding-card.green .finding-number { color: var(--success); }
-
-    .finding-card h4 {
-      font-size: 0.95rem;
-      font-weight: 700;
-      color: var(--text);
-      margin-bottom: 8px;
-    }
-
-    .finding-card p {
-      font-size: 0.88rem;
-      color: var(--text-secondary);
-      line-height: 1.65;
-    }
-
-    /* ── BibTeX ── */
-    .bibtex-block {
-      background: #0f172a;
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-      margin-top: 20px;
-      box-shadow: var(--shadow);
-    }
-
-    .bibtex-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 12px 20px;
-      background: #1e293b;
-      border-bottom: 1px solid #334155;
-    }
-
-    .bibtex-header span {
-      font-size: 0.82rem;
-      color: #94a3b8;
-      font-family: 'Source Code Pro', monospace;
-    }
-
-    .copy-btn {
-      background: #334155;
-      color: #cbd5e1;
-      border: none;
-      padding: 5px 12px;
-      border-radius: 6px;
-      font-size: 0.78rem;
-      cursor: pointer;
-      font-family: 'Inter', sans-serif;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      transition: background 0.2s;
-    }
-
-    .copy-btn:hover { background: #475569; color: white; }
-
-    .bibtex-code {
-      padding: 24px 24px;
-      font-family: 'Source Code Pro', monospace;
-      font-size: 0.82rem;
-      line-height: 1.8;
-      color: #e2e8f0;
-      overflow-x: auto;
-    }
-
-    .bibtex-code .key { color: #7dd3fc; }
-    .bibtex-code .value { color: #86efac; }
-    .bibtex-code .brace { color: #f9a8d4; }
-
-    /* ── Footer ── */
-    .page-footer {
-      background: #0f172a;
-      color: #94a3b8;
-      text-align: center;
-      padding: 32px 24px;
-      font-size: 0.85rem;
-      line-height: 1.8;
-    }
-
-    .page-footer a { color: #7dd3fc; text-decoration: none; }
-    .page-footer a:hover { text-decoration: underline; }
-
-    /* ── Responsive ── */
-    @media (max-width: 768px) {
-      .paper-title { font-size: 1.6rem; }
-      .aspects-container { grid-template-columns: 1fr; }
-      .stats-grid { grid-template-columns: repeat(2, 1fr); }
-      .stat-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.2); }
-      .stat-item:nth-child(2n) { border-right: none; }
-    }
-
-    /* ── Placeholder images ── */
-    .figure-placeholder {
-      background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
-      border: 2px dashed #cbd5e1;
-      border-radius: var(--radius);
-      padding: 48px 24px;
-      text-align: center;
-      color: var(--muted);
-    }
-
-    .figure-placeholder i { font-size: 2rem; margin-bottom: 12px; opacity: 0.4; }
-    .figure-placeholder p { font-size: 0.9rem; }
-  </style>
+  <meta charset="utf-8">
+  <meta name="description" content="SLVMEval: Synthetic Meta Evaluation Benchmark for Text-to-Long Video Generation">
+  <meta name="keywords" content="SLVMEval, text-to-video, benchmark, evaluation, long video">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SLVMEval</title>
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js"></script>
 </head>
+
+<style>
+  .author-block a {
+    color: #008AD7;
+    font-weight: normal;
+  }
+
+  .author-block a sup {
+    vertical-align: baseline;
+    position: relative;
+    top: -0.3em;
+    right: -0.1em;
+    font-size: smaller;
+  }
+
+  .results-table-wrapper {
+    overflow-x: auto;
+  }
+
+  .results-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.82rem;
+    min-width: 820px;
+  }
+
+  .results-table th {
+    background: #1e3a8a;
+    color: white;
+    font-weight: 600;
+    padding: 10px 10px;
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  .results-table th.group-header {
+    background: #1240a8;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .results-table td {
+    padding: 8px 10px;
+    text-align: center;
+    border-bottom: 1px solid #e5e7eb;
+    white-space: nowrap;
+  }
+
+  .results-table tr:last-child td { border-bottom: none; }
+
+  .results-table td.system-name {
+    text-align: left;
+    font-weight: 500;
+    padding-left: 14px;
+  }
+
+  .results-table .category-row td {
+    background: #f8faff;
+    font-weight: 700;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #1e3a8a;
+    padding: 7px 10px;
+  }
+
+  .results-table tr:hover td { background: #f9fafb; }
+
+  .results-table .human-row td {
+    background: #f0fdf4;
+    font-weight: 700;
+  }
+
+  .best { font-weight: 700; color: #1d4ed8; }
+  .second-best { color: #059669; }
+
+  .comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+  }
+
+  .comparison-table th {
+    background: #f1f5f9;
+    font-weight: 600;
+    color: #374151;
+    padding: 10px 14px;
+    text-align: center;
+    border-bottom: 2px solid #e5e7eb;
+  }
+
+  .comparison-table th:first-child { text-align: left; }
+
+  .comparison-table td {
+    padding: 10px 14px;
+    border-bottom: 1px solid #e5e7eb;
+    text-align: center;
+  }
+
+  .comparison-table td:first-child { text-align: left; font-weight: 500; }
+  .comparison-table .ours-row td { background: #eff6ff; font-weight: 600; }
+  .comparison-table .ours-row td:first-child { color: #1d4ed8; }
+
+  .check { color: #059669; }
+  .cross { color: #dc2626; }
+
+  .aspect-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+    margin-top: 8px;
+  }
+
+  .aspect-table th {
+    background: #374151;
+    color: white;
+    padding: 10px 14px;
+    text-align: left;
+  }
+
+  .aspect-table td {
+    padding: 9px 14px;
+    border-bottom: 1px solid #e5e7eb;
+    vertical-align: top;
+  }
+
+  .aspect-table tr:last-child td { border-bottom: none; }
+  .aspect-table tr:hover td { background: #f9fafb; }
+
+  .badge-vq {
+    display: inline-block;
+    background: #dbeafe;
+    color: #1d4ed8;
+    font-weight: 700;
+    font-size: 0.75rem;
+    padding: 2px 8px;
+    border-radius: 12px;
+  }
+
+  .badge-vtc {
+    display: inline-block;
+    background: #ede9fe;
+    color: #7c3aed;
+    font-weight: 700;
+    font-size: 0.75rem;
+    padding: 2px 8px;
+    border-radius: 12px;
+  }
+</style>
+
 <body>
 
-<!-- ── Hero ── -->
-<section class="hero-section">
-  <div class="conference-badge">
-    <i class="fas fa-trophy"></i>
-    CVPR 2026
-  </div>
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title">SLVMEval</h1>
+            <h3 class="title is-3 publication-title">Synthetic Meta Evaluation Benchmark for Text-to-Long Video Generation</h3>
+            <h5 class="subtitle is-5 publication-awards">CVPR 2026</h5>
 
-  <h1 class="paper-title">
-    <span class="highlight">SLVMEval</span>: Synthetic Meta Evaluation Benchmark<br>
-    for Text-to-<span class="highlight">Long Video</span> Generation
-  </h1>
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">
+                <a href="#">Ryosuke Matsuda<sup>1</sup></a>,
+              </span>
+              <span class="author-block">
+                <a href="#">Keito Kudo<sup>1</sup></a>,
+              </span>
+              <span class="author-block">
+                <a href="#">Haruto Yoshida<sup>1</sup></a>,
+              </span>
+              <span class="author-block">
+                <a href="#">Nobuyuki Shimizu<sup>2</sup></a>,
+              </span>
+              <span class="author-block">
+                <a href="#">Jun Suzuki<sup>1</sup></a>
+              </span>
+            </div>
 
-  <p class="paper-subtitle">
-    A benchmark for meta-evaluating automatic evaluation systems for T2V generation, focusing on long videos up to <strong style="color: #93c5fd;">~3 hours</strong>.
-  </p>
+            <div class="is-size-5 publication-authors">
+              <span class="author-block"><b style="color:#008AD7; font-weight:normal">1. </b> Tohoku University</span>
+              &nbsp;&nbsp;
+              <span class="author-block"><b style="color:#008AD7; font-weight:normal">2. </b> LY Corporation</span>
+            </div>
 
-  <div class="authors-block">
-    <p style="color: rgba(255,255,255,0.9); font-size: 1rem; font-weight: 500;">Anonymous Authors</p>
-    <p class="author-note">Anonymous CVPR Submission · Paper ID #9353</p>
-  </div>
-
-  <div class="btn-group">
-    <a href="CVPR_SLVMEval_final_version.pdf" class="btn btn-white" target="_blank">
-      <i class="fas fa-file-pdf"></i> Paper
-    </a>
-    <a href="#" class="btn btn-coming-soon">
-      <i class="fab fa-github"></i> Code (coming soon)
-    </a>
-    <a href="#" class="btn btn-coming-soon">
-      <i class="fas fa-database"></i> Dataset (coming soon)
-    </a>
-    <a href="#bibtex" class="btn btn-outline">
-      <i class="fas fa-quote-right"></i> BibTeX
-    </a>
-  </div>
-</section>
-
-<!-- ── Stats Strip ── -->
-<div class="stats-strip">
-  <div class="stats-grid">
-    <div class="stat-item">
-      <div class="stat-value">3,932</div>
-      <div class="stat-label">Video Pairs</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-value">1,461</div>
-      <div class="stat-label">Unique Prompts</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-value">~3 hrs</div>
-      <div class="stat-label">Max Video Length</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-value">10</div>
-      <div class="stat-label">Eval Aspects</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-value">84–97%</div>
-      <div class="stat-label">Human Accuracy</div>
-    </div>
-  </div>
-</div>
-
-<!-- ── Abstract ── -->
-<section class="section-block">
-  <div class="section-inner">
-    <h2 class="section-title">
-      <span class="title-icon"><i class="fas fa-align-left"></i></span>
-      Abstract
-    </h2>
-    <div class="section-divider"></div>
-
-    <p class="abstract-text">
-      We introduce <strong>SLVMEval</strong>, a benchmark for meta-evaluating text-to-video (T2V) evaluation systems.
-      SLVMEval focuses on assessing these systems on long videos of up to <strong>10,486 seconds</strong> (approximately 3 hours).
-      Our benchmark targets a fundamental requirement: whether systems can accurately judge video quality in settings that are easy for humans to assess.
-      We adopt a pairwise comparison-based meta-evaluation framework. Building on dense video captioning datasets, we synthetically degrade source videos to create
-      controlled "high-quality vs. low-quality" pairs across <strong>10 distinct aspects</strong>. We then use crowdsourcing to filter and retain only those pairs
-      in which the degradation is clearly perceptible, thereby establishing the final testbed. Using this testbed, we assess the reliability of existing evaluation
-      systems in ranking these pairs. Our experiments show that human evaluators identify the better long video with <strong>84.7%–96.8% accuracy</strong>,
-      while in 9 of the 10 aspects, the accuracy of these systems falls short of human judgment, revealing weaknesses in text-to-long video evaluation.
-    </p>
-
-    <div class="highlights-grid">
-      <div class="highlight-card">
-        <div class="highlight-icon blue"><i class="fas fa-video"></i></div>
-        <h3>Long-Video Focus</h3>
-        <p>First meta-evaluation benchmark designed specifically for long videos, covering durations up to 10,486 seconds — far beyond existing benchmarks that focus on short clips.</p>
-      </div>
-      <div class="highlight-card accent">
-        <div class="highlight-icon purple"><i class="fas fa-flask"></i></div>
-        <h3>Synthetic Degradation Pipeline</h3>
-        <p>We synthetically degrade source videos along 10 fine-grained aspects to create controlled high-quality vs. low-quality pairs, validated by crowdsourced human annotation.</p>
-      </div>
-      <div class="highlight-card success">
-        <div class="highlight-icon green"><i class="fas fa-chart-bar"></i></div>
-        <h3>Revealing the Gap</h3>
-        <p>State-of-the-art automatic evaluation systems (including GPT-5) lag behind human performance on 9 out of 10 aspects, and their accuracy degrades as video duration increases.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ── Overview Figure ── -->
-<section class="section-block alt">
-  <div class="section-inner">
-    <h2 class="section-title">
-      <span class="title-icon"><i class="fas fa-sitemap"></i></span>
-      Benchmark Overview
-    </h2>
-    <div class="section-divider"></div>
-
-    <div class="figure-card">
-      <div class="figure-placeholder">
-        <i class="fas fa-image" style="display:block;"></i>
-        <p><strong>Figure 1.</strong> Overview of SLVMEval pipeline</p>
-        <p style="margin-top:6px; font-size:0.82rem;">
-          Long videos → Aspect-specific synthetic degradation → Human verification → SLVMEval pairs → Meta-evaluation of automatic systems
-        </p>
-      </div>
-      <div class="figure-caption">
-        <strong>Figure 1.</strong>
-        Overview of SLVMEval. We construct human-validated pairs of original and aspect-specifically degraded long videos, and test various automatic evaluation systems.
-        Although human evaluators reliably pick the better video, all current automatic evaluation systems still lag behind human performance on most aspects,
-        revealing critical weaknesses in T2V evaluation.
-      </div>
-    </div>
-
-    <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.8;">
-      SLVMEval is designed to probe whether evaluation systems possess the <em>minimum capability</em> required for T2V model development.
-      We target long videos — spanning several minutes to nearly three hours — which are precisely the regimes where current automatic systems struggle most.
-      By constructing paired videos that differ in exactly one specified quality dimension, we enable precise, fine-grained meta-evaluation.
-    </p>
-  </div>
-</section>
-
-<!-- ── Dataset Comparison ── -->
-<section class="section-block">
-  <div class="section-inner">
-    <h2 class="section-title">
-      <span class="title-icon"><i class="fas fa-table"></i></span>
-      Dataset Comparison
-    </h2>
-    <div class="section-divider"></div>
-
-    <p style="color: var(--text-secondary); margin-bottom: 4px;">
-      SLVMEval significantly extends existing meta-evaluation benchmarks by targeting substantially longer videos and providing human-annotated pairwise judgments.
-    </p>
-
-    <div class="comparison-table-wrapper">
-      <table class="comparison-table">
-        <thead>
-          <tr>
-            <th>Benchmark</th>
-            <th>Human Annot.</th>
-            <th>Aspects</th>
-            <th>Videos</th>
-            <th>Unique Prompts</th>
-            <th>Max Duration (sec)</th>
-            <th>Avg. Prompt Len. (chars)</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>UVE-Bench</td>
-            <td><span class="check">✓</span></td>
-            <td>15</td>
-            <td>1,045</td>
-            <td>293</td>
-            <td>6.1</td>
-            <td>73.68</td>
-          </tr>
-          <tr>
-            <td>VBench</td>
-            <td><span class="check">✓</span></td>
-            <td>16</td>
-            <td>21,110</td>
-            <td>968</td>
-            <td>3.3</td>
-            <td>41.32</td>
-          </tr>
-          <tr>
-            <td>VBench Long</td>
-            <td><span class="cross">✗</span></td>
-            <td>16</td>
-            <td>N/A</td>
-            <td>944</td>
-            <td>N/A</td>
-            <td>41.00</td>
-          </tr>
-          <tr class="ours-row">
-            <td>SLVMEval <strong>(ours)</strong></td>
-            <td><span class="check">✓</span></td>
-            <td>10</td>
-            <td>3,932</td>
-            <td>1,461</td>
-            <td><strong>10,486.0</strong></td>
-            <td><strong>57,883.52</strong></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</section>
-
-<!-- ── Evaluation Aspects ── -->
-<section class="section-block alt">
-  <div class="section-inner">
-    <h2 class="section-title">
-      <span class="title-icon"><i class="fas fa-th-list"></i></span>
-      Evaluation Aspects
-    </h2>
-    <div class="section-divider"></div>
-
-    <p style="color: var(--text-secondary); margin-bottom: 4px;">
-      SLVMEval covers <strong>10 evaluation aspects</strong> organized into two categories.
-      For each aspect, we construct paired videos by applying a controlled synthetic degradation to the original, keeping all other factors unchanged.
-    </p>
-
-    <div class="figure-card" style="margin: 20px 0 28px;">
-      <div class="figure-placeholder">
-        <i class="fas fa-image" style="display:block;"></i>
-        <p><strong>Figure 2.</strong> SLVMEval viewpoints and aspect-specific degrading operations</p>
-      </div>
-      <div class="figure-caption">
-        <strong>Figure 2.</strong>
-        SLVMEval organizes 10 aspects into Video Quality and Video-Text Consistency groups, each paired with a specific degrading operation.
-        Lower panels show example pairs — paired videos enable precise meta-evaluation of whether an automatic evaluator can reliably identify the high-quality video.
-      </div>
-    </div>
-
-    <div class="aspects-container">
-      <!-- Video Quality -->
-      <div class="aspects-group">
-        <div class="aspects-group-header vq">
-          <i class="fas fa-film"></i> Video Quality (5 aspects)
-        </div>
-        <div class="aspect-item">
-          <span class="aspect-badge vq">1</span>
-          <div>
-            <div class="aspect-name">Aesthetics</div>
-            <div class="aspect-desc">Reduce the contrast of selected clips to assess frame-level aesthetic quality.</div>
-          </div>
-        </div>
-        <div class="aspect-item">
-          <span class="aspect-badge vq">2</span>
-          <div>
-            <div class="aspect-name">Technical Quality</div>
-            <div class="aspect-desc">Downscale the resolution to detect low-resolution artifacts.</div>
-          </div>
-        </div>
-        <div class="aspect-item">
-          <span class="aspect-badge vq">3</span>
-          <div>
-            <div class="aspect-name">Appearance Style</div>
-            <div class="aspect-desc">Apply mismatched artistic style transfer (e.g., oil painting, manga, sketch) to selected clips.</div>
-          </div>
-        </div>
-        <div class="aspect-item">
-          <span class="aspect-badge vq">4</span>
-          <div>
-            <div class="aspect-name">Background Consistency</div>
-            <div class="aspect-desc">Replace original backgrounds with random landscape images to break temporal visual stability.</div>
-          </div>
-        </div>
-        <div class="aspect-item">
-          <span class="aspect-badge vq">5</span>
-          <div>
-            <div class="aspect-name">Object Integrity</div>
-            <div class="aspect-desc">Erase prompt-specified objects via inpainting to remove key scene elements.</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Video-Text Consistency -->
-      <div class="aspects-group">
-        <div class="aspects-group-header vtc">
-          <i class="fas fa-align-center"></i> Video-Text Consistency (5 aspects)
-        </div>
-        <div class="aspect-item">
-          <span class="aspect-badge vtc">6</span>
-          <div>
-            <div class="aspect-name">Color</div>
-            <div class="aspect-desc">Edit colors of prompt-specified objects to different colors, breaking color consistency with the description.</div>
-          </div>
-        </div>
-        <div class="aspect-item">
-          <span class="aspect-badge vtc">7</span>
-          <div>
-            <div class="aspect-name">Dynamics Degree</div>
-            <div class="aspect-desc">Replace motion-containing clips with static middle frames to reduce dynamics described in the prompt.</div>
-          </div>
-        </div>
-        <div class="aspect-item">
-          <span class="aspect-badge vtc">8</span>
-          <div>
-            <div class="aspect-name">Comprehensiveness</div>
-            <div class="aspect-desc">Remove several clips from the original video, reducing coverage of all prompt-described events.</div>
-          </div>
-        </div>
-        <div class="aspect-item">
-          <span class="aspect-badge vtc">9</span>
-          <div>
-            <div class="aspect-name">Spatial Relationship</div>
-            <div class="aspect-desc">Horizontally flip clips mentioning left/right relations, inverting spatial consistency.</div>
-          </div>
-        </div>
-        <div class="aspect-item">
-          <span class="aspect-badge vtc">10</span>
-          <div>
-            <div class="aspect-name">Temporal Flow</div>
-            <div class="aspect-desc">Relocate several consecutive clips to random positions, breaking the described event order.</div>
+            <div class="column has-text-centered">
+              <div class="publication-links">
+                <span class="link-block">
+                  <a href="https://arxiv.org/abs/XXXX.XXXXX" target="_blank"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                    </span>
+                    <span>arXiv (coming soon)</span>
+                  </a>
+                </span>
+                <span class="link-block">
+                  <a href="https://github.com/tohoku-nlp/slvmeval" target="_blank"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fab fa-github"></i>
+                    </span>
+                    <span>Code</span>
+                  </a>
+                </span>
+                <span class="link-block">
+                  <a href="https://huggingface.co/datasets/tohoku-nlp/SLVMEval" target="_blank"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span>🤗 Dataset</span>
+                  </a>
+                </span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ── Results ── -->
-<section class="section-block">
-  <div class="section-inner">
-    <h2 class="section-title">
-      <span class="title-icon"><i class="fas fa-poll"></i></span>
-      Experimental Results
-    </h2>
-    <div class="section-divider"></div>
-
-    <p style="color: var(--text-secondary); margin-bottom: 24px;">
-      Accuracy (%) of each baseline system on SLVMEval. Numbers are accuracy % ± 95% CI.
-      <strong style="color:#1d4ed8;">Blue bold</strong> = best per aspect;
-      <strong style="color:#059669;">green</strong> = second best. Chance level = 50%.
-    </p>
-
-    <div class="results-table-wrapper">
-      <table class="results-table">
-        <thead>
-          <tr>
-            <th rowspan="2" style="text-align:left; padding-left:16px;">System</th>
-            <th colspan="5" class="group-header" style="border-left:2px solid rgba(255,255,255,0.2);">Video Quality</th>
-            <th colspan="5" class="group-header" style="border-left:2px solid rgba(255,255,255,0.2);">Video-Text Consistency</th>
-          </tr>
-          <tr>
-            <th>Aesthetics</th>
-            <th>Technical Quality</th>
-            <th>Appearance Style</th>
-            <th>Background Consistency</th>
-            <th>Object Integrity</th>
-            <th>Color</th>
-            <th>Dynamics Degree</th>
-            <th>Compreh.</th>
-            <th>Spatial Rel.</th>
-            <th>Temporal Flow</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr class="category-row">
-            <td colspan="11">Video-based VLM-as-a-judge</td>
-          </tr>
-          <tr>
-            <td class="system-name">GPT-5</td>
-            <td class="best">90.1<sub>±2.5</sub></td>
-            <td class="best">85.8<sub>±4.2</sub></td>
-            <td>88.9<sub>±2.5</sub></td>
-            <td class="best">98.9<sub>±0.8</sub></td>
-            <td>72.0<sub>±6.2</sub></td>
-            <td class="best">84.3<sub>±3.5</sub></td>
-            <td>35.3<sub>±3.6</sub></td>
-            <td>51.3<sub>±4.5</sub></td>
-            <td class="second-best">59.7<sub>±4.4</sub></td>
-            <td>50.3<sub>±4.1</sub></td>
-          </tr>
-          <tr>
-            <td class="system-name">GPT-5-mini</td>
-            <td>84.0<sub>±3.0</sub></td>
-            <td>48.1<sub>±6.1</sub></td>
-            <td>78.0<sub>±3.2</sub></td>
-            <td class="second-best">95.2<sub>±1.6</sub></td>
-            <td>66.5<sub>±6.5</sub></td>
-            <td class="second-best">69.4<sub>±4.5</sub></td>
-            <td>31.5<sub>±3.5</sub></td>
-            <td>45.7<sub>±4.5</sub></td>
-            <td>51.1<sub>±4.5</sub></td>
-            <td>43.7<sub>±4.1</sub></td>
-          </tr>
-          <tr>
-            <td class="system-name">Qwen3</td>
-            <td>55.7<sub>±4.1</sub></td>
-            <td>51.9<sub>±6.1</sub></td>
-            <td>55.3<sub>±3.9</sub></td>
-            <td>49.7<sub>±3.7</sub></td>
-            <td>38.5<sub>±6.7</sub></td>
-            <td>48.4<sub>±4.9</sub></td>
-            <td>50.0<sub>±3.8</sub></td>
-            <td>51.7<sub>±4.5</sub></td>
-            <td>51.7<sub>±4.5</sub></td>
-            <td>50.2<sub>±4.1</sub></td>
-          </tr>
-          <tr class="category-row">
-            <td colspan="11">Text-based VLM-as-a-judge</td>
-          </tr>
-          <tr>
-            <td class="system-name">GPT-5</td>
-            <td>74.8<sub>±3.6</sub></td>
-            <td>46.2<sub>±6.1</sub></td>
-            <td>81.1<sub>±3.1</sub></td>
-            <td>83.8<sub>±2.7</sub></td>
-            <td>68.0<sub>±6.5</sub></td>
-            <td>68.9<sub>±4.5</sub></td>
-            <td>43.1<sub>±3.8</sub></td>
-            <td>50.6<sub>±4.5</sub></td>
-            <td>47.0<sub>±4.5</sub></td>
-            <td>43.5<sub>±4.1</sub></td>
-          </tr>
-          <tr>
-            <td class="system-name">GPT-5-mini</td>
-            <td>75.0<sub>±3.6</sub></td>
-            <td>53.8<sub>±6.1</sub></td>
-            <td>79.6<sub>±3.2</sub></td>
-            <td>81.1<sub>±2.9</sub></td>
-            <td>65.5<sub>±6.6</sub></td>
-            <td>71.8<sub>±4.4</sub></td>
-            <td>43.8<sub>±3.8</sub></td>
-            <td>50.6<sub>±4.5</sub></td>
-            <td>51.1<sub>±4.5</sub></td>
-            <td>41.2<sub>±4.0</sub></td>
-          </tr>
-          <tr>
-            <td class="system-name">Qwen3</td>
-            <td>51.6<sub>±4.1</sub></td>
-            <td>50.0<sub>±6.1</sub></td>
-            <td>72.4<sub>±3.5</sub></td>
-            <td>73.0<sub>±3.3</sub></td>
-            <td>51.0<sub>±6.9</sub></td>
-            <td>61.0<sub>±4.7</sub></td>
-            <td>48.6<sub>±3.9</sub></td>
-            <td>52.7<sub>±4.5</sub></td>
-            <td>51.7<sub>±4.5</sub></td>
-            <td>52.9<sub>±4.5</sub></td>
-          </tr>
-          <tr>
-            <td class="system-name">CLIPScore</td>
-            <td>56.4<sub>±5.8</sub></td>
-            <td>72.3<sub>±7.7</sub></td>
-            <td>53.2<sub>±5.5</sub></td>
-            <td>68.6<sub>±4.8</sub></td>
-            <td class="second-best">76.0<sub>±8.4</sub></td>
-            <td>66.2<sub>±6.5</sub></td>
-            <td>51.7<sub>±5.4</sub></td>
-            <td class="best">57.4<sub>±6.3</sub></td>
-            <td>55.1<sub>±6.3</sub></td>
-            <td>50.5<sub>±5.8</sub></td>
-          </tr>
-          <tr>
-            <td class="system-name">VideoScore</td>
-            <td>52.5<sub>±5.8</sub></td>
-            <td>33.8<sub>±8.3</sub></td>
-            <td>65.7<sub>±5.3</sub></td>
-            <td>71.2<sub>±4.7</sub></td>
-            <td>66.0<sub>±9.3</sub></td>
-            <td>33.8<sub>±6.5</sub></td>
-            <td>52.7<sub>±4.9</sub></td>
-            <td>34.5<sub>±6.1</sub></td>
-            <td>49.6<sub>±6.4</sub></td>
-            <td>46.3<sub>±5.8</sub></td>
-          </tr>
-          <tr class="human-row">
-            <td class="system-name">&#127775; Human</td>
-            <td><strong>96.5<sub>±2.1</sub></strong></td>
-            <td><strong>91.8<sub>±4.7</sub></strong></td>
-            <td class="best"><strong>95.2<sub>±2.4</sub></strong></td>
-            <td><strong>95.0<sub>±2.3</sub></strong></td>
-            <td class="best"><strong>86.6<sub>±6.7</sub></strong></td>
-            <td><strong>96.8<sub>±2.4</sub></strong></td>
-            <td class="best"><strong>95.9<sub>±2.1</sub></strong></td>
-            <td><strong>84.7<sub>±4.6</sub></strong></td>
-            <td class="best"><strong>88.2<sub>±4.1</sub></strong></td>
-            <td class="best"><strong>86.6<sub>±4.0</sub></strong></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</section>
-
-<!-- ── Key Findings ── -->
-<section class="section-block alt">
-  <div class="section-inner">
-    <h2 class="section-title">
-      <span class="title-icon"><i class="fas fa-lightbulb"></i></span>
-      Key Findings
-    </h2>
-    <div class="section-divider"></div>
-
-    <div class="figure-card">
-      <div class="figure-placeholder">
-        <i class="fas fa-chart-line" style="display:block;"></i>
-        <p><strong>Figure 3.</strong> Relationship between video duration and accuracy across all 10 aspects</p>
-        <p style="margin-top: 6px; font-size: 0.82rem;">For most aspects and systems, accuracy decreases as video duration increases (negative Spearman ρ<sub>S</sub>).</p>
+  <!-- Abstract -->
+  <section class="section">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-six-fifths">
+          <h2 class="title is-3">Abstract</h2>
+        </div>
       </div>
-      <div class="figure-caption">
-        <strong>Figure 3.</strong>
-        Accuracy vs. video duration for each evaluation system across all 10 aspects. For most aspects,
-        automatic system accuracy tends to decrease as video duration increases, revealing fundamental limitations when evaluating long videos.
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column is-full-width">
+            <div class="content has-text-justified">
+              <p>
+                We introduce <b>SLVMEval</b>, a benchmark for meta-evaluating text-to-video (T2V) evaluation systems.
+                SLVMEval focuses on assessing these systems on long videos of up to <b>10,486 seconds</b> (approximately 3 hours).
+                Our benchmark targets a fundamental requirement: whether systems can accurately judge video quality in settings that are easy for humans to assess.
+                We adopt a pairwise comparison-based meta-evaluation framework. Building on dense video captioning datasets, we synthetically degrade source videos to create
+                controlled "high-quality vs. low-quality" pairs across <b>10 distinct aspects</b>. We then use crowdsourcing to filter and retain only those pairs
+                in which the degradation is clearly perceptible, thereby establishing the final testbed. Using this testbed, we assess the reliability of existing evaluation
+                systems in ranking these pairs. Our experiments show that human evaluators identify the better long video with <b>84.7%–96.8% accuracy</b>,
+                while in 9 of the 10 aspects, the accuracy of these systems falls short of human judgment, revealing weaknesses in text-to-long video evaluation.
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
+  </section>
 
-    <div class="findings-grid">
-      <div class="finding-card blue">
-        <div class="finding-number">9/10</div>
-        <h4>Automatic Systems Fall Short</h4>
-        <p>All current automatic evaluation systems — including GPT-5 — lag behind human performance on 9 out of 10 evaluation aspects, despite these tasks being easy for humans.</p>
-      </div>
-      <div class="finding-card purple">
-        <div class="finding-number">↓</div>
-        <h4>Duration Sensitivity</h4>
-        <p>For most evaluation aspects, automatic system accuracy decreases as video duration increases (negative Spearman ρ<sub>S</sub>), revealing critical limitations for long-video evaluation.</p>
-      </div>
-      <div class="finding-card orange">
-        <div class="finding-number">85%+</div>
-        <h4>Human Baseline</h4>
-        <p>Human evaluators achieve 84.7%–96.8% accuracy across all 10 aspects, establishing a strong human-level target for future T2V evaluation systems to reach.</p>
-      </div>
-      <div class="finding-card green">
-        <div class="finding-number">0.94+</div>
-        <h4>Filtering Not Required</h4>
-        <p>High Pearson correlation (ρ<sub>P</sub> > 0.94) between filtered and unfiltered results shows our degradation pipeline produces reliable pairs without costly manual filtering.</p>
+  <!-- Overview -->
+  <section class="section">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-six-fifths">
+        <h2 class="title is-3">Overview</h2>
       </div>
     </div>
-  </div>
-</section>
-
-<!-- ── BibTeX ── -->
-<section class="section-block" id="bibtex">
-  <div class="section-inner">
-    <h2 class="section-title">
-      <span class="title-icon"><i class="fas fa-quote-right"></i></span>
-      BibTeX
-    </h2>
-    <div class="section-divider"></div>
-
-    <p style="color: var(--text-secondary); margin-bottom: 4px;">
-      If you find SLVMEval useful in your research, please cite our paper:
-    </p>
-
-    <div class="bibtex-block">
-      <div class="bibtex-header">
-        <span>bibtex · SLVMEval</span>
-        <button class="copy-btn" onclick="copyBibtex(this)">
-          <i class="fas fa-copy"></i> Copy
-        </button>
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column is-full-width">
+          <div class="content has-text-justified">
+            <p>
+              SLVMEval is designed to probe whether evaluation systems possess the <em>minimum capability</em> required for T2V model development.
+              We target long videos — spanning several minutes to nearly three hours — which are precisely the regimes where current automatic systems struggle most.
+              By constructing paired videos that differ in exactly one specified quality dimension, we enable precise, fine-grained meta-evaluation.
+            </p>
+            <ul>
+              <li><b>3,932 Video Pairs</b> &mdash; covering 1,461 unique prompts across 10 evaluation aspects.</li>
+              <li><b>Long-Video Focus</b> &mdash; videos up to 10,486 seconds (~3 hours), far beyond existing benchmarks.</li>
+              <li><b>Human-Validated</b> &mdash; crowdsourced annotation ensures pairs are clearly distinguishable by humans (84.7%–96.8% accuracy).</li>
+            </ul>
+          </div>
+          <centering>
+            <div style="text-align: center;">
+              <img id="overview" width="100%" src="materials/images/overview.png">
+            </div>
+          </centering>
+        </div>
       </div>
-      <pre class="bibtex-code" id="bibtex-content"><span class="brace">@inproceedings{</span><span class="key">anonymous2026slvmeval</span>,
-  <span class="key">title</span>     = {<span class="value">SLVMEval: Synthetic Meta Evaluation Benchmark for Text-to-Long Video Generation</span>},
-  <span class="key">author</span>    = {<span class="value">Anonymous Authors</span>},
-  <span class="key">booktitle</span> = {<span class="value">Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)</span>},
-  <span class="key">year</span>      = {<span class="value">2026</span>},
-<span class="brace">}</span></pre>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ── Footer ── -->
-<footer class="page-footer">
-  <p>
-    This website is for the anonymous CVPR 2026 submission. Code and data will be publicly released upon acceptance.
-  </p>
-  <p style="margin-top: 8px;">
-    Website template inspired by <a href="https://vdocrag.github.io" target="_blank">VDocRAG</a> and
-    <a href="https://nerfies.github.io" target="_blank">Nerfies</a>.
-    Licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank">CC BY-SA 4.0</a>.
-  </p>
-</footer>
+  <!-- Dataset Comparison -->
+  <section class="section">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-six-fifths">
+        <h2 class="title is-3">Dataset Comparison</h2>
+      </div>
+    </div>
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column is-full-width">
+          <div class="content has-text-justified">
+            <p>
+              SLVMEval significantly extends existing meta-evaluation benchmarks by targeting substantially longer videos and providing human-annotated pairwise judgments.
+            </p>
+          </div>
+          <div style="overflow-x: auto;">
+            <table class="comparison-table">
+              <thead>
+                <tr>
+                  <th>Benchmark</th>
+                  <th>Human Annot.</th>
+                  <th>Aspects</th>
+                  <th>Videos</th>
+                  <th>Unique Prompts</th>
+                  <th>Max Duration (sec)</th>
+                  <th>Avg. Prompt Len. (chars)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>UVE-Bench</td>
+                  <td><span class="check">✓</span></td>
+                  <td>15</td>
+                  <td>1,045</td>
+                  <td>293</td>
+                  <td>6.1</td>
+                  <td>73.68</td>
+                </tr>
+                <tr>
+                  <td>VBench</td>
+                  <td><span class="check">✓</span></td>
+                  <td>16</td>
+                  <td>21,110</td>
+                  <td>968</td>
+                  <td>3.3</td>
+                  <td>41.32</td>
+                </tr>
+                <tr>
+                  <td>VBench Long</td>
+                  <td><span class="cross">✗</span></td>
+                  <td>16</td>
+                  <td>N/A</td>
+                  <td>944</td>
+                  <td>N/A</td>
+                  <td>41.00</td>
+                </tr>
+                <tr class="ours-row">
+                  <td>SLVMEval <b>(ours)</b></td>
+                  <td><span class="check">✓</span></td>
+                  <td>10</td>
+                  <td>3,932</td>
+                  <td>1,461</td>
+                  <td><b>10,486.0</b></td>
+                  <td><b>57,883.52</b></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<script>
-  function copyBibtex(btn) {
-    const code = document.getElementById('bibtex-content').innerText;
-    navigator.clipboard.writeText(code).then(() => {
-      btn.innerHTML = '<i class="fas fa-check"></i> Copied!';
-      btn.style.background = '#166534';
-      btn.style.color = 'white';
-      setTimeout(() => {
-        btn.innerHTML = '<i class="fas fa-copy"></i> Copy';
-        btn.style.background = '';
-        btn.style.color = '';
-      }, 2000);
-    });
-  }
-</script>
+  <!-- Evaluation Aspects -->
+  <section class="section">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-six-fifths">
+        <h2 class="title is-3">Evaluation Aspects</h2>
+      </div>
+    </div>
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column is-full-width">
+          <div class="content has-text-justified">
+            <p>
+              SLVMEval covers <b>10 evaluation aspects</b> organized into two categories.
+              For each aspect, we construct paired videos by applying a controlled synthetic degradation to the original, keeping all other factors unchanged.
+            </p>
+          </div>
+          <table class="aspect-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Category</th>
+                <th>Aspect</th>
+                <th>Degradation</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td><span class="badge-vq">Video Quality</span></td>
+                <td><b>Aesthetics</b></td>
+                <td>Reduce the contrast of selected clips to assess frame-level aesthetic quality.</td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td><span class="badge-vq">Video Quality</span></td>
+                <td><b>Technical Quality</b></td>
+                <td>Downscale the resolution to detect low-resolution artifacts.</td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td><span class="badge-vq">Video Quality</span></td>
+                <td><b>Appearance Style</b></td>
+                <td>Apply mismatched artistic style transfer (e.g., oil painting, manga, sketch) to selected clips.</td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td><span class="badge-vq">Video Quality</span></td>
+                <td><b>Background Consistency</b></td>
+                <td>Replace original backgrounds with random landscape images to break temporal visual stability.</td>
+              </tr>
+              <tr>
+                <td>5</td>
+                <td><span class="badge-vq">Video Quality</span></td>
+                <td><b>Object Integrity</b></td>
+                <td>Erase prompt-specified objects via inpainting to remove key scene elements.</td>
+              </tr>
+              <tr>
+                <td>6</td>
+                <td><span class="badge-vtc">Video-Text Consistency</span></td>
+                <td><b>Color</b></td>
+                <td>Edit colors of prompt-specified objects to different colors, breaking color consistency with the description.</td>
+              </tr>
+              <tr>
+                <td>7</td>
+                <td><span class="badge-vtc">Video-Text Consistency</span></td>
+                <td><b>Dynamics Degree</b></td>
+                <td>Replace motion-containing clips with static middle frames to reduce dynamics described in the prompt.</td>
+              </tr>
+              <tr>
+                <td>8</td>
+                <td><span class="badge-vtc">Video-Text Consistency</span></td>
+                <td><b>Comprehensiveness</b></td>
+                <td>Remove several clips from the original video, reducing coverage of all prompt-described events.</td>
+              </tr>
+              <tr>
+                <td>9</td>
+                <td><span class="badge-vtc">Video-Text Consistency</span></td>
+                <td><b>Spatial Relationship</b></td>
+                <td>Horizontally flip clips mentioning left/right relations, inverting spatial consistency.</td>
+              </tr>
+              <tr>
+                <td>10</td>
+                <td><span class="badge-vtc">Video-Text Consistency</span></td>
+                <td><b>Temporal Flow</b></td>
+                <td>Relocate several consecutive clips to random positions, breaking the described event order.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Video Examples -->
+  <section class="section">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-six-fifths">
+        <h2 class="title is-3">Video Examples</h2>
+      </div>
+    </div>
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column is-full-width">
+          <div class="content has-text-justified">
+            <p>
+              Examples of original and degraded video pairs from SLVMEval across different evaluation aspects.
+              Each pair is constructed so that the degradation is clearly perceptible to human annotators.
+            </p>
+          </div>
+          <centering>
+            <div style="text-align: center;">
+              <img id="video-examples" width="100%" src="materials/images/cvpr2026_video_fig_video_examples.png">
+            </div>
+          </centering>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Results -->
+  <section class="section">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-six-fifths">
+        <h2 class="title is-3">Experimental Results</h2>
+      </div>
+    </div>
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column is-full-width">
+          <div class="content has-text-justified">
+            <p>
+              Accuracy (%) of each baseline system on SLVMEval. Numbers are accuracy % ± 95% CI.
+              <span style="color:#1d4ed8;font-weight:bold;">Blue bold</span> = best per aspect;
+              <span style="color:#059669;font-weight:bold;">green</span> = second best. Chance level = 50%.
+            </p>
+            <p>
+              Human evaluators achieve <b>84.7%–96.8% accuracy</b> across all 10 aspects, while in <b>9 of the 10 aspects</b>,
+              the accuracy of automatic evaluation systems falls short of human judgment.
+            </p>
+          </div>
+          <div class="results-table-wrapper">
+            <table class="results-table">
+              <thead>
+                <tr>
+                  <th rowspan="2" style="text-align:left; padding-left:14px;">System</th>
+                  <th colspan="5" class="group-header" style="border-left:2px solid rgba(255,255,255,0.2);">Video Quality</th>
+                  <th colspan="5" class="group-header" style="border-left:2px solid rgba(255,255,255,0.2);">Video-Text Consistency</th>
+                </tr>
+                <tr>
+                  <th>Aesthetics</th>
+                  <th>Technical</th>
+                  <th>Appearance</th>
+                  <th>Background</th>
+                  <th>Object</th>
+                  <th>Color</th>
+                  <th>Dynamics</th>
+                  <th>Compreh.</th>
+                  <th>Spatial</th>
+                  <th>Temporal</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="category-row">
+                  <td colspan="11">Video-based VLM-as-a-judge</td>
+                </tr>
+                <tr>
+                  <td class="system-name">GPT-5</td>
+                  <td class="best">90.1<sub>±2.5</sub></td>
+                  <td class="best">85.8<sub>±4.2</sub></td>
+                  <td>88.9<sub>±2.5</sub></td>
+                  <td class="best">98.9<sub>±0.8</sub></td>
+                  <td>72.0<sub>±6.2</sub></td>
+                  <td class="best">84.3<sub>±3.5</sub></td>
+                  <td>35.3<sub>±3.6</sub></td>
+                  <td>51.3<sub>±4.5</sub></td>
+                  <td class="second-best">59.7<sub>±4.4</sub></td>
+                  <td>50.3<sub>±4.1</sub></td>
+                </tr>
+                <tr>
+                  <td class="system-name">GPT-5-mini</td>
+                  <td>84.0<sub>±3.0</sub></td>
+                  <td>48.1<sub>±6.1</sub></td>
+                  <td>78.0<sub>±3.2</sub></td>
+                  <td class="second-best">95.2<sub>±1.6</sub></td>
+                  <td>66.5<sub>±6.5</sub></td>
+                  <td class="second-best">69.4<sub>±4.5</sub></td>
+                  <td>31.5<sub>±3.5</sub></td>
+                  <td>45.7<sub>±4.5</sub></td>
+                  <td>51.1<sub>±4.5</sub></td>
+                  <td>43.7<sub>±4.1</sub></td>
+                </tr>
+                <tr>
+                  <td class="system-name">Qwen3</td>
+                  <td>55.7<sub>±4.1</sub></td>
+                  <td>51.9<sub>±6.1</sub></td>
+                  <td>55.3<sub>±3.9</sub></td>
+                  <td>49.7<sub>±3.7</sub></td>
+                  <td>38.5<sub>±6.7</sub></td>
+                  <td>48.4<sub>±4.9</sub></td>
+                  <td>50.0<sub>±3.8</sub></td>
+                  <td>51.7<sub>±4.5</sub></td>
+                  <td>51.7<sub>±4.5</sub></td>
+                  <td>50.2<sub>±4.1</sub></td>
+                </tr>
+                <tr class="category-row">
+                  <td colspan="11">Text-based VLM-as-a-judge</td>
+                </tr>
+                <tr>
+                  <td class="system-name">GPT-5</td>
+                  <td>74.8<sub>±3.6</sub></td>
+                  <td>46.2<sub>±6.1</sub></td>
+                  <td>81.1<sub>±3.1</sub></td>
+                  <td>83.8<sub>±2.7</sub></td>
+                  <td>68.0<sub>±6.5</sub></td>
+                  <td>68.9<sub>±4.5</sub></td>
+                  <td>43.1<sub>±3.8</sub></td>
+                  <td>50.6<sub>±4.5</sub></td>
+                  <td>47.0<sub>±4.5</sub></td>
+                  <td>43.5<sub>±4.1</sub></td>
+                </tr>
+                <tr>
+                  <td class="system-name">GPT-5-mini</td>
+                  <td>75.0<sub>±3.6</sub></td>
+                  <td>53.8<sub>±6.1</sub></td>
+                  <td>79.6<sub>±3.2</sub></td>
+                  <td>81.1<sub>±2.9</sub></td>
+                  <td>65.5<sub>±6.6</sub></td>
+                  <td>71.8<sub>±4.4</sub></td>
+                  <td>43.8<sub>±3.8</sub></td>
+                  <td>50.6<sub>±4.5</sub></td>
+                  <td>51.1<sub>±4.5</sub></td>
+                  <td>41.2<sub>±4.0</sub></td>
+                </tr>
+                <tr>
+                  <td class="system-name">Qwen3</td>
+                  <td>51.6<sub>±4.1</sub></td>
+                  <td>50.0<sub>±6.1</sub></td>
+                  <td>72.4<sub>±3.5</sub></td>
+                  <td>73.0<sub>±3.3</sub></td>
+                  <td>51.0<sub>±6.9</sub></td>
+                  <td>61.0<sub>±4.7</sub></td>
+                  <td>48.6<sub>±3.9</sub></td>
+                  <td>52.7<sub>±4.5</sub></td>
+                  <td>51.7<sub>±4.5</sub></td>
+                  <td>52.9<sub>±4.5</sub></td>
+                </tr>
+                <tr>
+                  <td class="system-name">CLIPScore</td>
+                  <td>56.4<sub>±5.8</sub></td>
+                  <td>72.3<sub>±7.7</sub></td>
+                  <td>53.2<sub>±5.5</sub></td>
+                  <td>68.6<sub>±4.8</sub></td>
+                  <td class="second-best">76.0<sub>±8.4</sub></td>
+                  <td>66.2<sub>±6.5</sub></td>
+                  <td>51.7<sub>±5.4</sub></td>
+                  <td class="best">57.4<sub>±6.3</sub></td>
+                  <td>55.1<sub>±6.3</sub></td>
+                  <td>50.5<sub>±5.8</sub></td>
+                </tr>
+                <tr>
+                  <td class="system-name">VideoScore</td>
+                  <td>52.5<sub>±5.8</sub></td>
+                  <td>33.8<sub>±8.3</sub></td>
+                  <td>65.7<sub>±5.3</sub></td>
+                  <td>71.2<sub>±4.7</sub></td>
+                  <td>66.0<sub>±9.3</sub></td>
+                  <td>33.8<sub>±6.5</sub></td>
+                  <td>52.7<sub>±4.9</sub></td>
+                  <td>34.5<sub>±6.1</sub></td>
+                  <td>49.6<sub>±6.4</sub></td>
+                  <td>46.3<sub>±5.8</sub></td>
+                </tr>
+                <tr style="background:#f0fdf4; font-weight:700;">
+                  <td class="system-name">&#127775; Human</td>
+                  <td><b>96.5<sub>±2.1</sub></b></td>
+                  <td><b>91.8<sub>±4.7</sub></b></td>
+                  <td class="best"><b>95.2<sub>±2.4</sub></b></td>
+                  <td><b>95.0<sub>±2.3</sub></b></td>
+                  <td class="best"><b>86.6<sub>±6.7</sub></b></td>
+                  <td><b>96.8<sub>±2.4</sub></b></td>
+                  <td class="best"><b>95.9<sub>±2.1</sub></b></td>
+                  <td><b>84.7<sub>±4.6</sub></b></td>
+                  <td class="best"><b>88.2<sub>±4.1</sub></b></td>
+                  <td class="best"><b>86.6<sub>±4.0</sub></b></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Key Findings -->
+  <section class="section">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-six-fifths">
+        <h2 class="title is-3">Key Findings</h2>
+      </div>
+    </div>
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column is-full-width">
+          <div class="content has-text-justified">
+            <ul>
+              <li>
+                <b>9/10 aspects: Automatic systems fall short.</b>
+                All current automatic evaluation systems — including GPT-5 — lag behind human performance on 9 out of 10 evaluation aspects, despite these tasks being easy for humans.
+              </li>
+              <li>
+                <b>Duration sensitivity.</b>
+                For most evaluation aspects, automatic system accuracy decreases as video duration increases (negative Spearman ρ<sub>S</sub>), revealing critical limitations for long-video evaluation.
+              </li>
+              <li>
+                <b>Strong human baseline.</b>
+                Human evaluators achieve 84.7%–96.8% accuracy across all 10 aspects, establishing a strong human-level target for future T2V evaluation systems to reach.
+              </li>
+              <li>
+                <b>Reliable synthetic degradation.</b>
+                High Pearson correlation (ρ<sub>P</sub> &gt; 0.94) between filtered and unfiltered results shows our degradation pipeline produces reliable pairs without costly manual filtering.
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BibTeX -->
+  <section class="section" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <h2 class="title">BibTeX</h2>
+      <pre><code>@inproceedings{matsuda2026slvmeval,
+  title     = {SLVMEval: Synthetic Meta Evaluation Benchmark for Text-to-Long Video Generation},
+  author    = {Ryosuke Matsuda and Keito Kudo and Haruto Yoshida and Nobuyuki Shimizu and Jun Suzuki},
+  booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
+  year      = {2026},
+}</code></pre>
+    </div>
+  </section>
+
+  <section class="section" id="Acknowledgement">
+    <div class="container is-max-desktop content">
+      <h2 class="title">Acknowledgement</h2>
+      <p>
+        This website is adapted from <a href="https://vdocrag.github.io">VDocRAG</a> and
+        <a href="https://github.com/nerfies/nerfies.github.io">Nerfies</a>, licensed under a
+        <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+      </p>
+    </div>
+  </section>
 
 </body>
+
 </html>
