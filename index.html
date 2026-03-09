@@ -20,7 +20,41 @@
 </head>
 
 <style>
-  .author-block a {
+  /* Publication header */
+  .publication-title {
+    font-family: 'Google Sans', sans-serif;
+  }
+
+  .publication-awards {
+    color: #FF3960 !important;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+  }
+
+  .publication-authors {
+    font-family: 'Google Sans', sans-serif;
+  }
+
+  .dnerf {
+    font-variant: small-caps;
+    color: #1F5F9B;
+    font-weight: 600;
+  }
+
+  /* Logo next to title */
+  .title-with-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+  }
+
+  .title-logo {
+    height: 60px;
+    width: auto;
+  }
+
+.author-block a {
     color: #008AD7;
     font-weight: normal;
   }
@@ -45,50 +79,108 @@
   }
 
   .results-table th {
-    background: #1e3a8a;
-    color: white;
+    background: white;
+    color: #111827;
     font-weight: 600;
     padding: 10px 10px;
     text-align: center;
     white-space: nowrap;
+    border-bottom: 1px solid #e5e7eb;
+  }
+
+  .results-table thead tr:first-child th {
+    border-top: 1px solid #e5e7eb;
   }
 
   .results-table th.group-header {
-    background: #1240a8;
-    font-size: 0.78rem;
+    background: white;
+    color: #111827;
+    font-size: 0.8rem;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.06em;
+    font-weight: 700;
   }
 
-  .results-table td {
-    padding: 8px 10px;
+  .results-table th.group-header-vq {
+    border-bottom: 3px solid #4F95DA;
+  }
+
+  .results-table th.group-header-vtc {
+    border-bottom: 3px solid #1F5F9B;
+  }
+
+  .results-table th.col-vq {
+    background: white;
+    color: #111827;
+    border-bottom: 1px solid #e5e7eb;
+    font-size: 0.78rem;
+    white-space: normal;
+    vertical-align: middle;
     text-align: center;
+    line-height: 1.35;
+    padding: 8px 8px;
+  }
+
+  .results-table th.col-vtc {
+    background: white;
+    color: #111827;
+    border-bottom: 1px solid #e5e7eb;
+    font-size: 0.78rem;
+    white-space: normal;
+    vertical-align: middle;
+    text-align: center;
+    line-height: 1.35;
+    padding: 8px 8px;
+  }
+
+  .results-table th.col-gap-header,
+  .results-table td.col-gap {
+    width: 12px;
+    min-width: 12px;
+    padding: 0 !important;
+    border: none !important;
+    background: white !important;
+  }
+
+  .results-table tr:hover td.col-gap { background: white !important; }
+
+  .results-table td {
+    padding: 8px 8px;
+    text-align: center !important;
     border-bottom: 1px solid #e5e7eb;
     white-space: nowrap;
+  }
+
+  .results-table td sub {
+    vertical-align: baseline;
+    font-size: 0.72em;
+    position: relative;
+    bottom: 0;
   }
 
   .results-table tr:last-child td { border-bottom: none; }
 
   .results-table td.system-name {
-    text-align: left;
+    text-align: left !important;
     font-weight: 500;
     padding-left: 14px;
   }
 
   .results-table td.system-name-indented {
-    text-align: left;
+    text-align: left !important;
     font-weight: 500;
-    padding-left: 30px;
+    padding-left: 44px;
   }
 
   .results-table .category-row td {
-    background: #f8faff;
-    font-weight: 700;
-    font-size: 0.78rem;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: #1e3a8a;
-    padding: 7px 10px;
+    background: white;
+    font-weight: 600;
+    font-size: 0.82rem;
+    text-transform: none;
+    letter-spacing: 0;
+    color: #111827;
+    padding: 7px 14px;
+    text-align: left !important;
   }
 
   .results-table tr:hover td { background: #f9fafb; }
@@ -155,13 +247,13 @@
   .aspect-table tr:hover td { background: #f9fafb; }
 
   .badge-vq {
-    color: #1d4ed8;
+    color: #4F95DA;
     font-weight: 600;
     font-size: 0.88rem;
   }
 
   .badge-vtc {
-    color: #7c3aed;
+    color: #1F5F9B;
     font-weight: 600;
     font-size: 0.88rem;
   }
@@ -307,7 +399,10 @@
       <div class="container is-max-desktop">
         <div class="columns is-centered">
           <div class="column has-text-centered">
-            <h1 class="title is-1 publication-title">SLVMEval</h1>
+            <div class="title-with-logo">
+              <img src="materials/images/logo.png" alt="SLVMEval logo" class="title-logo">
+              <h1 class="title is-1 publication-title" style="margin-bottom: 0;">SLVMEval</h1>
+            </div>
             <h3 class="title is-3 publication-title">Synthetic Meta Evaluation Benchmark for Text-to-Long Video Generation</h3>
             <h5 class="subtitle is-5 publication-awards">CVPR 2026</h5>
 
@@ -382,8 +477,8 @@
           <div class="column is-full-width">
             <div class="content has-text-justified">
               <p>
-                We introduce <b>SLVMEval</b>, a benchmark for meta-evaluating text-to-video (T2V) evaluation systems.
-                SLVMEval focuses on assessing these systems on long videos of up to <b>10,486 seconds</b> (approximately 3 hours).
+                We introduce <b class="dnerf">SLVMEval</b>, a benchmark for meta-evaluating text-to-video (T2V) evaluation systems.
+                <span class="dnerf">SLVMEval</span> focuses on assessing these systems on long videos of up to <b>10,486 seconds</b> (approximately 3 hours).
                 Our benchmark targets a fundamental requirement: whether systems can accurately judge video quality in settings that are easy for humans to assess.
                 We adopt a pairwise comparison-based meta-evaluation framework. Building on dense video captioning datasets, we synthetically degrade source videos to create
                 controlled "high-quality vs. low-quality" pairs across <b>10 distinct aspects</b>. We then use crowdsourcing to filter and retain only those pairs
@@ -410,7 +505,7 @@
         <div class="column is-full-width">
           <div class="content has-text-justified">
             <p>
-              SLVMEval is designed to probe whether evaluation systems possess the <em>minimum capability</em> required for T2V model development.
+              <span class="dnerf">SLVMEval</span> is designed to probe whether evaluation systems possess the <em>minimum capability</em> required for T2V model development.
               We target long videos — spanning several minutes to nearly three hours — which are precisely the regimes where current automatic systems struggle most.
               By constructing paired videos that differ in exactly one specified quality dimension, we enable precise, fine-grained meta-evaluation.
             </p>
@@ -442,7 +537,7 @@
         <div class="column is-full-width">
           <div class="content has-text-justified">
             <p>
-              SLVMEval significantly extends existing meta-evaluation benchmarks by targeting substantially longer videos and providing human-annotated pairwise judgments.
+              <span class="dnerf">SLVMEval</span> significantly extends existing meta-evaluation benchmarks by targeting substantially longer videos and providing human-annotated pairwise judgments.
             </p>
           </div>
           <div class="table-scroll">
@@ -515,7 +610,7 @@
         <div class="column is-full-width">
           <div class="content has-text-justified">
             <p>
-              SLVMEval covers <b>10 evaluation aspects</b> organized into two categories.
+              <span class="dnerf">SLVMEval</span> covers <b>10 evaluation aspects</b> organized into two categories.
               For each aspect, we construct paired videos by applying a controlled synthetic degradation to the original, keeping all other factors unchanged.
             </p>
           </div>
@@ -649,26 +744,27 @@
             <table class="results-table">
               <thead>
                 <tr>
-                  <th rowspan="2" style="text-align:left; padding-left:14px;">System</th>
-                  <th colspan="5" class="group-header" style="border-left:2px solid rgba(255,255,255,0.2);">Video Quality</th>
-                  <th colspan="5" class="group-header" style="border-left:2px solid rgba(255,255,255,0.2);">Video-Text Consistency</th>
+                  <th rowspan="2" style="text-align:left; padding-left:14px; vertical-align:middle;">System</th>
+                  <th colspan="5" class="group-header group-header-vq" style="text-align:center;">Video Quality</th>
+                  <th rowspan="2" class="col-gap-header"></th>
+                  <th colspan="5" class="group-header group-header-vtc" style="text-align:center;">Video-Text Consistency</th>
                 </tr>
                 <tr>
-                  <th>Aesthetics</th>
-                  <th>Technical</th>
-                  <th>Appearance</th>
-                  <th>Background</th>
-                  <th>Object</th>
-                  <th>Color</th>
-                  <th>Dynamics</th>
-                  <th>Compreh.</th>
-                  <th>Spatial</th>
-                  <th>Temporal</th>
+                  <th class="col-vq">Aesthetics</th>
+                  <th class="col-vq">Technical<br>Quality</th>
+                  <th class="col-vq">Appearance<br>Style</th>
+                  <th class="col-vq">Background<br>Consistency</th>
+                  <th class="col-vq">Object<br>Integrity</th>
+                  <th class="col-vtc">Color</th>
+                  <th class="col-vtc">Dynamics<br>Degree</th>
+                  <th class="col-vtc">Comprehen<br>siveness</th>
+                  <th class="col-vtc">Spatial<br>Relationship</th>
+                  <th class="col-vtc">Temporal<br>Flow</th>
                 </tr>
               </thead>
               <tbody>
                 <tr class="category-row">
-                  <td colspan="11">Video-based VLM-as-a-judge</td>
+                  <td colspan="12">Video-based</td>
                 </tr>
                 <tr>
                   <td class="system-name-indented">GPT-5</td>
@@ -677,6 +773,7 @@
                   <td class="second-best">88.9<sub>±2.5</sub></td>
                   <td class="best">98.9<sub>±0.8</sub></td>
                   <td>72.0<sub>±6.2</sub></td>
+                  <td class="col-gap"></td>
                   <td class="second-best">84.3<sub>±3.5</sub></td>
                   <td>35.3<sub>±3.6</sub></td>
                   <td>51.3<sub>±4.5</sub></td>
@@ -690,6 +787,7 @@
                   <td>78.0<sub>±3.2</sub></td>
                   <td class="second-best">95.2<sub>±1.6</sub></td>
                   <td>66.5<sub>±6.5</sub></td>
+                  <td class="col-gap"></td>
                   <td>69.4<sub>±4.5</sub></td>
                   <td>31.5<sub>±3.5</sub></td>
                   <td>45.7<sub>±4.5</sub></td>
@@ -703,6 +801,7 @@
                   <td>55.3<sub>±3.9</sub></td>
                   <td>49.7<sub>±3.7</sub></td>
                   <td>38.5<sub>±6.7</sub></td>
+                  <td class="col-gap"></td>
                   <td>48.4<sub>±4.9</sub></td>
                   <td>50.0<sub>±3.8</sub></td>
                   <td>51.7<sub>±4.5</sub></td>
@@ -710,7 +809,7 @@
                   <td>50.2<sub>±4.1</sub></td>
                 </tr>
                 <tr class="category-row">
-                  <td colspan="11">Text-based VLM-as-a-judge</td>
+                  <td colspan="12">Text-based</td>
                 </tr>
                 <tr>
                   <td class="system-name-indented">GPT-5</td>
@@ -719,6 +818,7 @@
                   <td>81.1<sub>±3.1</sub></td>
                   <td>83.8<sub>±2.7</sub></td>
                   <td>68.0<sub>±6.5</sub></td>
+                  <td class="col-gap"></td>
                   <td>68.9<sub>±4.5</sub></td>
                   <td>43.1<sub>±3.8</sub></td>
                   <td>50.6<sub>±4.5</sub></td>
@@ -732,6 +832,7 @@
                   <td>79.6<sub>±3.2</sub></td>
                   <td>81.1<sub>±2.9</sub></td>
                   <td>65.5<sub>±6.6</sub></td>
+                  <td class="col-gap"></td>
                   <td>71.8<sub>±4.4</sub></td>
                   <td>43.8<sub>±3.8</sub></td>
                   <td>50.6<sub>±4.5</sub></td>
@@ -745,6 +846,7 @@
                   <td>72.4<sub>±3.5</sub></td>
                   <td>73.0<sub>±3.3</sub></td>
                   <td>51.0<sub>±6.9</sub></td>
+                  <td class="col-gap"></td>
                   <td>61.0<sub>±4.7</sub></td>
                   <td>48.6<sub>±3.9</sub></td>
                   <td>52.7<sub>±4.5</sub></td>
@@ -758,6 +860,7 @@
                   <td>53.2<sub>±5.5</sub></td>
                   <td>68.6<sub>±4.8</sub></td>
                   <td class="second-best">76.0<sub>±8.4</sub></td>
+                  <td class="col-gap"></td>
                   <td>66.2<sub>±6.5</sub></td>
                   <td>51.7<sub>±5.4</sub></td>
                   <td class="second-best">57.4<sub>±6.3</sub></td>
@@ -771,6 +874,7 @@
                   <td>65.7<sub>±5.3</sub></td>
                   <td>71.2<sub>±4.7</sub></td>
                   <td>66.0<sub>±9.3</sub></td>
+                  <td class="col-gap"></td>
                   <td>33.8<sub>±6.5</sub></td>
                   <td class="second-best">52.7<sub>±4.9</sub></td>
                   <td>34.5<sub>±6.1</sub></td>
@@ -784,6 +888,7 @@
                   <td class="best"><b>95.2<sub>±2.4</sub></b></td>
                   <td><b>95.0<sub>±2.3</sub></b></td>
                   <td class="best"><b>86.6<sub>±6.7</sub></b></td>
+                  <td class="col-gap"></td>
                   <td class="best"><b>96.8<sub>±2.4</sub></b></td>
                   <td class="best"><b>95.9<sub>±2.1</sub></b></td>
                   <td class="best"><b>84.7<sub>±4.6</sub></b></td>
