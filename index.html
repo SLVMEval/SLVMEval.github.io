@@ -390,6 +390,245 @@
       padding: 5px 5px;
     }
   }
+
+  /* ── Video Examples ── */
+  .ve-group-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 4px 12px;
+    border-radius: 6px;
+    display: inline-block;
+    margin-bottom: 10px;
+  }
+  .ve-group-label.vq  { color: #4F95DA; background: #eff6ff; border: 1px solid #bfdbfe; }
+  .ve-group-label.vtc { color: #1F5F9B; background: #e8f0f9; border: 1px solid #93c5fd; }
+
+  .ve-row {
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 18px;
+    background: #fafafa;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  }
+
+  .ve-row-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 11px 16px;
+    background: white;
+    border-bottom: 1px solid #e2e8f0;
+  }
+
+  .ve-aspect-name {
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: #111827;
+    font-family: 'Google Sans', sans-serif;
+  }
+
+  .ve-badge {
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    padding: 2px 9px;
+    border-radius: 9px;
+  }
+  .ve-badge.vq  { color: #4F95DA; background: #eff6ff; border: 1px solid #bfdbfe; }
+  .ve-badge.vtc { color: #1F5F9B; background: #e8f0f9; border: 1px solid #93c5fd; }
+
+  .ve-video-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .ve-col { display: flex; flex-direction: column; }
+  .ve-col:first-child { border-right: 1px solid #e2e8f0; }
+
+  .ve-col-label {
+    text-align: center;
+    font-size: 0.73rem;
+    font-weight: 700;
+    padding: 6px 0;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .original-col .ve-col-label {
+    color: #065f46;
+    background: #d1fae5;
+    border-bottom: 1px solid #6ee7b7;
+  }
+
+  .degraded-col .ve-col-label {
+    color: #991b1b;
+    background: #fee2e2;
+    border-bottom: 1px solid #fca5a5;
+  }
+
+  .ve-col video {
+    width: 100%;
+    display: block;
+    background: #000;
+  }
+
+  .ve-caption {
+    padding: 11px 16px;
+    font-size: 0.855rem;
+    color: #374151;
+    line-height: 1.7;
+    background: white;
+    border-top: 1px solid #e2e8f0;
+  }
+
+  .ve-caption strong { color: #dc2626; font-weight: 600; }
+  .ve-caption em     { color: #6b7280; }
+
+  .ve-caption-label {
+    font-size: 0.67rem;
+    font-weight: 700;
+    color: #9ca3af;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    margin-bottom: 4px;
+  }
+
+  /* Comprehensiveness custom player */
+  .comp-player-wrap {
+    position: relative;
+  }
+
+  .comp-phase-badge {
+    position: absolute;
+    top: 7px;
+    right: 7px;
+    background: rgba(0,0,0,0.65);
+    color: white;
+    font-size: 0.67rem;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 8px;
+    z-index: 5;
+    pointer-events: none;
+  }
+
+  .comp-gap-overlay {
+    position: absolute;
+    top: 0; right: 0; bottom: 0; left: 0;
+    background: #111827;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    z-index: 4;
+    border: 2px dashed #ef4444;
+    display: none;
+  }
+
+  .comp-gap-overlay.visible { display: flex; }
+
+  .comp-gap-icon  { font-size: 2rem; line-height: 1; }
+  .comp-gap-ja    { color: #ef4444; font-size: 0.82rem; font-weight: 700; letter-spacing: 0.08em; }
+  .comp-gap-en    { color: #f87171; font-size: 0.72rem; }
+
+  .comp-controls {
+    background: #f1f5f9;
+    border-top: 1px solid #e2e8f0;
+    padding: 11px 16px;
+  }
+
+  .comp-phase-track {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 10px;
+  }
+
+  .comp-phase-seg {
+    padding: 7px 8px;
+    background: white;
+    text-align: center;
+    transition: background 0.2s;
+  }
+
+  .comp-phase-seg + .comp-phase-seg { border-left: 1px solid #e2e8f0; }
+
+  .comp-phase-seg.active          { background: #eff6ff; }
+  .comp-phase-seg.active.is-gap   { background: #fef2f2; }
+
+  .comp-seg-title {
+    font-size: 0.71rem;
+    font-weight: 700;
+    color: #374151;
+    display: block;
+  }
+
+  .comp-phase-seg.active .comp-seg-title           { color: #1d4ed8; }
+  .comp-phase-seg.active.is-gap .comp-seg-title    { color: #dc2626; }
+
+  .comp-seg-orig {
+    font-size: 0.63rem;
+    color: #059669;
+    display: block;
+    margin-top: 2px;
+  }
+
+  .comp-seg-deg  {
+    font-size: 0.63rem;
+    color: #dc2626;
+    display: block;
+    margin-top: 1px;
+  }
+
+  .comp-btn-row {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .comp-play-btn {
+    background: #1d4ed8;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 7px 22px;
+    font-size: 0.84rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: 'Google Sans', sans-serif;
+    transition: background 0.15s;
+    min-width: 96px;
+  }
+
+  .comp-play-btn:hover { background: #1e40af; }
+
+  .comp-reset-btn {
+    background: white;
+    color: #374151;
+    border: 1.5px solid #cbd5e1;
+    border-radius: 8px;
+    padding: 6px 14px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: 'Google Sans', sans-serif;
+    transition: background 0.15s;
+  }
+
+  .comp-reset-btn:hover { background: #f1f5f9; }
+
+  @media (max-width: 640px) {
+    .ve-video-grid { grid-template-columns: 1fr; }
+    .ve-col:first-child { border-right: none; border-bottom: 1px solid #e2e8f0; }
+    .comp-phase-track { grid-template-columns: 1fr; }
+    .comp-phase-seg + .comp-phase-seg { border-left: none; border-top: 1px solid #e2e8f0; }
+  }
 </style>
 
 <body>
@@ -691,7 +930,7 @@
   </section>
 
   <!-- Video Examples -->
-  <section class="section">
+  <section class="section" id="video-examples-section">
     <div class="columns is-centered has-text-centered">
       <div class="column is-six-fifths">
         <h2 class="title is-3">Video Examples</h2>
@@ -704,13 +943,299 @@
             <p>
               Examples of original and degraded video pairs from SLVMEval across different evaluation aspects.
               Each pair is constructed so that the degradation is clearly perceptible to human annotators.
+              Pressing play on either video plays both simultaneously.
             </p>
           </div>
-          <centering>
-            <div style="text-align: center;">
-              <img id="video-examples" width="100%" src="materials/images/cvpr2026_video_fig_video_examples.png">
+
+          <!-- ── Video Quality ── -->
+          <div class="ve-group-label vq">Video Quality</div>
+
+          <!-- 1. Aesthetics -->
+          <div class="ve-row">
+            <div class="ve-row-header">
+              <span class="ve-aspect-name">Aesthetics</span>
             </div>
-          </centering>
+            <div class="ve-video-grid">
+              <div class="ve-col original-col">
+                <div class="ve-col-label">Original</div>
+                <video class="ve-sync" data-pair="aesthetics" data-role="orig" controls muted playsinline preload="metadata">
+                  <source src="materials/videos/Aesthetics/original_-SadVBnJyH0_15s.mp4" type="video/mp4">
+                </video>
+              </div>
+              <div class="ve-col degraded-col">
+                <div class="ve-col-label">Degraded</div>
+                <video class="ve-sync" data-pair="aesthetics" data-role="deg" controls muted playsinline preload="metadata">
+                  <source src="materials/videos/Aesthetics/degraded_-SadVBnJyH0_15s.mp4" type="video/mp4">
+                </video>
+              </div>
+            </div>
+            <div class="ve-caption">
+              <div class="ve-caption-label">Video Description</div>
+              The video shows a close-up of a half sandwich and a side of fries with toppings on a wooden serving board. The sandwich appears to be filled with greens and possibly a protein, held in someone's hand. The environment seems casual, potentially a street food setting or a casual dining restaurant. <strong>The light is warm and diffused, casting soft shadows and highlighting the textures of the food.</strong> The colors are primarily the golden brown of the fries, the green of the sandwich filling, and the red and green of the fry seasonings.
+            </div>
+          </div>
+
+          <!-- 2. Technical Quality -->
+          <div class="ve-row">
+            <div class="ve-row-header">
+              <span class="ve-aspect-name">Technical Quality</span>
+            </div>
+            <div class="ve-video-grid">
+              <div class="ve-col original-col">
+                <div class="ve-col-label">Original</div>
+                <video class="ve-sync" data-pair="technical" data-role="orig" controls muted playsinline preload="metadata">
+                  <source src="materials/videos/Technical_quality/original_-1dnkfw7JNg_15s.mp4" type="video/mp4">
+                </video>
+              </div>
+              <div class="ve-col degraded-col">
+                <div class="ve-col-label">Degraded</div>
+                <video class="ve-sync" data-pair="technical" data-role="deg" controls muted playsinline preload="metadata">
+                  <source src="materials/videos/Technical_quality/degraded_-1dnkfw7JNg_15s.mp4" type="video/mp4">
+                </video>
+              </div>
+            </div>
+            <div class="ve-caption">
+              <div class="ve-caption-label">Video Description</div>
+              In a setting that seems like an indoor studio or room with a cozy ambiance, the video features a brown tabby cat named Tweeter. This domestic long-hair cat, indicated to be an 11-year-old spayed female, is wearing a bright yellow tag. The feline appears healthy and well-cared for, with a fluffy fur coat. She sits calmly, being petted by someone off-camera, occasionally turning her head to look around. Her inquisitive nature is highlighted by the voice-over that mentions her keen interest in observing the activities of other animals.
+            </div>
+          </div>
+
+          <!-- 3. Appearance Style -->
+          <div class="ve-row">
+            <div class="ve-row-header">
+              <span class="ve-aspect-name">Appearance Style</span>
+            </div>
+            <div class="ve-video-grid">
+              <div class="ve-col original-col">
+                <div class="ve-col-label">Original</div>
+                <video class="ve-sync" data-pair="appearance" data-role="orig" controls muted playsinline preload="metadata">
+                  <source src="materials/videos/Appearance_style/original_--M1auvYQJA_15s.mp4" type="video/mp4">
+                </video>
+              </div>
+              <div class="ve-col degraded-col">
+                <div class="ve-col-label">Degraded</div>
+                <video class="ve-sync" data-pair="appearance" data-role="deg" controls muted playsinline preload="metadata">
+                  <source src="materials/videos/Appearance_style/degraded_--M1auvYQJA_15s.mp4" type="video/mp4">
+                </video>
+              </div>
+            </div>
+            <div class="ve-caption">
+              <div class="ve-caption-label">Video Description</div>
+              The video frames show a street food vendor's display case, likely for selling traditional Vietnamese snacks. Inside the glass display are neatly arranged, segmented compartments filled with various types of sliced foods. We can see crisp-looking green slices, possibly some kind of pickled vegetables, next to off-white and beige slices that could be some form of processed or raw tubers. In the top left corner, there's a basket holding deep-fried items with a golden-brown hue, which the vendor is seen picking up with their gloved hand.
+            </div>
+          </div>
+
+          <!-- 4. Background Consistency -->
+          <div class="ve-row">
+            <div class="ve-row-header">
+              <span class="ve-aspect-name">Background Consistency</span>
+            </div>
+            <div class="ve-video-grid">
+              <div class="ve-col original-col">
+                <div class="ve-col-label">Original</div>
+                <video class="ve-sync" data-pair="background" data-role="orig" controls muted playsinline preload="metadata">
+                  <source src="materials/videos/Background_consistency/original_--5Uy5YZMjA_15s.mp4" type="video/mp4">
+                </video>
+              </div>
+              <div class="ve-col degraded-col">
+                <div class="ve-col-label">Degraded</div>
+                <video class="ve-sync" data-pair="background" data-role="deg" controls muted playsinline preload="metadata">
+                  <source src="materials/videos/Background_consistency/degraded_--5Uy5YZMjA_15s.mp4" type="video/mp4">
+                </video>
+              </div>
+            </div>
+            <div class="ve-caption">
+              <div class="ve-caption-label">Video Description</div>
+              The clip opens with a close-up of hands holding a small item, possibly food, with a focus on the textures and colors of the item and skin. <strong>The background is indistinct, highlighting the subject's action.</strong> The scene cuts to a wider shot featuring a group of people outdoors under a clear sky, with one holding an object high above, which is indicated as a 'potato'. The environment is lively, and the lighting suggests daytime. The colors are vibrant with diverse clothing styles hinting at cultural diversity.
+            </div>
+          </div>
+
+          <!-- 5. Object Integrity -->
+          <div class="ve-row">
+            <div class="ve-row-header">
+              <span class="ve-aspect-name">Object Integrity</span>
+            </div>
+            <div class="ve-video-grid">
+              <div class="ve-col original-col">
+                <div class="ve-col-label">Original</div>
+                <video class="ve-sync" data-pair="object" data-role="orig" controls muted playsinline preload="metadata">
+                  <source src="materials/videos/Object_Integrity/original_0Rg05oTN42U_15s.mp4" type="video/mp4">
+                </video>
+              </div>
+              <div class="ve-col degraded-col">
+                <div class="ve-col-label">Degraded</div>
+                <video class="ve-sync" data-pair="object" data-role="deg" controls muted playsinline preload="metadata">
+                  <source src="materials/videos/Object_Integrity/degraded_0Rg05oTN42U_15s.mp4" type="video/mp4">
+                </video>
+              </div>
+            </div>
+            <div class="ve-caption">
+              <div class="ve-caption-label">Video Description</div>
+              The clip features a medium close-up of a <strong>person seated inside a vehicle</strong>, likely to emphasize the subject and the vehicle's interior features. The person is wearing a grey polo shirt with a red logo on the left side, gesturing with their hands to emphasize the wide range of vehicle accessories available. Their actions suggest they are explaining how customizable these vehicles are. The vehicle interior is black, with visible branding 'VHT-X' on the seat and a clear view of the vehicle's steering column and door frame.
+            </div>
+          </div>
+
+          <!-- ── Video-Text Consistency ── -->
+          <div class="ve-group-label vtc" style="margin-top:28px;">Video-Text Consistency</div>
+
+          <!-- 6. Color -->
+          <div class="ve-row">
+            <div class="ve-row-header">
+              <span class="ve-aspect-name">Color</span>
+            </div>
+            <div class="ve-video-grid">
+              <div class="ve-col original-col">
+                <div class="ve-col-label">Original</div>
+                <video class="ve-sync" data-pair="color" data-role="orig" controls muted playsinline preload="metadata">
+                  <source src="materials/videos/Color/original_--OvdeGNnHU_15s.mp4" type="video/mp4">
+                </video>
+              </div>
+              <div class="ve-col degraded-col">
+                <div class="ve-col-label">Degraded</div>
+                <video class="ve-sync" data-pair="color" data-role="deg" controls muted playsinline preload="metadata">
+                  <source src="materials/videos/Color/degraded_--OvdeGNnHU_15s.mp4" type="video/mp4">
+                </video>
+              </div>
+            </div>
+            <div class="ve-caption">
+              <div class="ve-caption-label">Video Description</div>
+              The clip opens with a full-screen <strong>blue</strong> background featuring the ESA (European Space Agency) logo in white. The ESA logo consists of a circular design with an array of lines and dots forming what appears to be a stylized 'E' within a globe representation. Then additional elements appear: the logos of NASA, JAXA (Japan Aerospace Exploration Agency), Roscosmos (Russian space agency), and CSA (Canadian Space Agency) line up alongside ESA's logo. <strong>The color palette is mainly blue and white</strong>, with some touches of national colors in the various space agencies' logos.
+            </div>
+          </div>
+
+          <!-- 7. Dynamics Degree -->
+          <div class="ve-row">
+            <div class="ve-row-header">
+              <span class="ve-aspect-name">Dynamics Degree</span>
+            </div>
+            <div class="ve-video-grid">
+              <div class="ve-col original-col">
+                <div class="ve-col-label">Original</div>
+                <video class="ve-sync" data-pair="dynamics" data-role="orig" controls muted playsinline preload="metadata">
+                  <source src="materials/videos/Dynamics_Degree/original_-0eJJZClRPs_15s.mp4" type="video/mp4">
+                </video>
+              </div>
+              <div class="ve-col degraded-col">
+                <div class="ve-col-label">Degraded</div>
+                <video class="ve-sync" data-pair="dynamics" data-role="deg" controls muted playsinline preload="metadata">
+                  <source src="materials/videos/Dynamics_Degree/degraded_-0eJJZClRPs_15s.mp4" type="video/mp4">
+                </video>
+              </div>
+            </div>
+            <div class="ve-caption">
+              <div class="ve-caption-label">Video Description</div>
+              The video showcases a hermit crab with a grey, patterned shell moving across a sandy surface, likely at Dry Tortugas National Park. The crab's shell appears large relative to its body, suggesting it's an adult. As <strong>the crab moves</strong>, its legs and claws are visible, displaying reddish-brown colors that contrast with its pale shell. <strong>The focus remains solely on the crab's movement and behavior as it navigates the terrain.</strong> The scene is devoid of human activity, highlighting the natural habitat of the creature.
+            </div>
+          </div>
+
+          <!-- 8. Comprehensiveness (special multi-segment player) -->
+          <div class="ve-row" id="ve-comp-row">
+            <div class="ve-row-header">
+              <span class="ve-aspect-name">Comprehensiveness</span>
+            </div>
+            <div class="ve-video-grid">
+              <!-- Original: 3 segments -->
+              <div class="ve-col original-col">
+                <div class="ve-col-label">Original (3 segments)</div>
+                <div class="comp-player-wrap">
+                  <video id="comp-orig" controls muted playsinline preload="metadata" style="width:100%;display:block;background:#000;">
+                    <source src="materials/videos/Comprehensiveness/original_1tWsTcq6_sY_part1_0000-0031_5s.mp4" type="video/mp4">
+                  </video>
+                  <div class="comp-phase-badge" id="comp-orig-badge">Seg 1 / 3</div>
+                </div>
+              </div>
+              <!-- Degraded: 2 segments + gap -->
+              <div class="ve-col degraded-col">
+                <div class="ve-col-label">Degraded (2 segments)</div>
+                <div class="comp-player-wrap">
+                  <video id="comp-deg" controls muted playsinline preload="metadata" style="width:100%;display:block;background:#000;">
+                    <source src="materials/videos/Comprehensiveness/degraded_1tWsTcq6_sY_part1_0000-0031_5s.mp4" type="video/mp4">
+                  </video>
+                  <div class="comp-gap-overlay" id="comp-gap">
+                    <div class="comp-gap-icon">✂</div>
+                    <div class="comp-gap-ja">欠損セグメント</div>
+                    <div class="comp-gap-en">Missing Segment</div>
+                  </div>
+                  <div class="comp-phase-badge" id="comp-deg-badge">Seg 1 / 2</div>
+                </div>
+              </div>
+            </div>
+            <!-- Phase indicator (no buttons) -->
+            <div class="comp-controls">
+              <div class="comp-phase-track">
+                <div class="comp-phase-seg active" data-cphase="0">
+                  <span class="comp-seg-title">Phase 1</span>
+                  <span class="comp-seg-orig">Orig: Seg 1 / 3 (5 s)</span>
+                  <span class="comp-seg-deg">Deg: Seg 1 / 2 (5 s)</span>
+                </div>
+                <div class="comp-phase-seg is-gap" data-cphase="1">
+                  <span class="comp-seg-title">Phase 2</span>
+                  <span class="comp-seg-orig">Orig: Seg 2 / 3 (5 s)</span>
+                  <span class="comp-seg-deg" style="color:#ef4444;">Deg: ✂ Remove scene</span>
+                </div>
+                <div class="comp-phase-seg" data-cphase="2">
+                  <span class="comp-seg-title">Phase 3</span>
+                  <span class="comp-seg-orig">Orig: Seg 3 / 3 (10 s)</span>
+                  <span class="comp-seg-deg">Deg: Seg 2 / 2 (10 s)</span>
+                </div>
+              </div>
+            </div>
+            <div class="ve-caption">
+              <div class="ve-caption-label">Video Description</div>
+              The individual, wearing a long-sleeve black shirt and jeans, stands on a dimly lit stage with a casual posture, holding what appears to be a remote or clicker. There are two birch tree stumps of different heights positioned to the speaker's left. To the right, there is a white bench with vertical slats, suggesting a simple, nature-inspired set design. The stage floor is dark, contrasting with the lighter backdrop. The colors are muted with blacks, whites, and greys dominating the scene. <em>The degraded version removes the middle segment, leaving only 2 of the original 3 segments (Seg 2 is missing from the degraded video).</em>
+            </div>
+          </div>
+
+          <!-- 9. Spatial Relationship -->
+          <div class="ve-row">
+            <div class="ve-row-header">
+              <span class="ve-aspect-name">Spatial Relationship</span>
+            </div>
+            <div class="ve-video-grid">
+              <div class="ve-col original-col">
+                <div class="ve-col-label">Original</div>
+                <video class="ve-sync" data-pair="spatial" data-role="orig" controls muted playsinline preload="metadata">
+                  <source src="materials/videos/Spatial_Realationship/original_1tFBnTshfr8_15s.mp4" type="video/mp4">
+                </video>
+              </div>
+              <div class="ve-col degraded-col">
+                <div class="ve-col-label">Degraded</div>
+                <video class="ve-sync" data-pair="spatial" data-role="deg" controls muted playsinline preload="metadata">
+                  <source src="materials/videos/Spatial_Realationship/degraded_1tFBnTshfr8_15s.mp4" type="video/mp4">
+                </video>
+              </div>
+            </div>
+            <div class="ve-caption">
+              <div class="ve-caption-label">Video Description</div>
+              The video shows a detailed view of a toy, specifically a Kamen Rider Gaim's Sengoku Driver with an attached Genesis Core on the <strong>left</strong> side. The driver is predominantly black with metallic and gold accents, displaying an LED screen reading '5.13' and a handle on the right. In the background, there is a nondescript beige wall. The light source appears to be coming from the front, illuminating the toy evenly without harsh shadows. In the last frame, a hand is inserting a pink and blue lockseed into the right side of the driver.
+            </div>
+          </div>
+
+          <!-- 10. Temporal Flow -->
+          <div class="ve-row">
+            <div class="ve-row-header">
+              <span class="ve-aspect-name">Temporal Flow</span>
+            </div>
+            <div class="ve-video-grid">
+              <div class="ve-col original-col">
+                <div class="ve-col-label">Original</div>
+                <video class="ve-sync" data-pair="temporal" data-role="orig" controls muted playsinline preload="metadata">
+                  <source src="materials/videos/Temporal_Flow/original_0gwmgHvgCfs_15s.mp4" type="video/mp4">
+                </video>
+              </div>
+              <div class="ve-col degraded-col">
+                <div class="ve-col-label">Degraded</div>
+                <video class="ve-sync" data-pair="temporal" data-role="deg" controls muted playsinline preload="metadata">
+                  <source src="materials/videos/Temporal_Flow/degraded_0gwmgHvgCfs_15s.mp4" type="video/mp4">
+                </video>
+              </div>
+            </div>
+            <div class="ve-caption">
+              <div class="ve-caption-label">Video Description</div>
+              A close-up shot focuses on the torso of <strong>an individual wearing a black utility vest with multiple pockets and attachments</strong>. The person appears to be holding an electronic device, possibly a tablet, which has a logo resembling a flame, and is housed in a black protective case with clips. A pen is also visible, secured on the vest. The vest has a velcro patch area but no discernible patches attached. The individual's other hand is partially visible, holding the tablet or adjusting its position. The vest and tablet are predominantly black, providing a stark contrast to the white background.
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
@@ -958,6 +1483,156 @@
       </p>
     </div>
   </section>
+
+  <script>
+  (function () {
+    /* Sync regular pairs - state-based, no busy flag */
+    document.querySelectorAll('.ve-sync').forEach(function (vid) {
+      var pair = vid.dataset.pair;
+      var role = vid.dataset.role;
+
+      function partner() {
+        var other = role === 'orig' ? 'deg' : 'orig';
+        return document.querySelector('.ve-sync[data-pair="' + pair + '"][data-role="' + other + '"]');
+      }
+
+      vid.addEventListener('play', function () {
+        var p = partner();
+        if (p && p.paused) p.play().catch(function(){});
+      });
+
+      vid.addEventListener('pause', function () {
+        var p = partner();
+        if (p && !p.paused) p.pause();
+      });
+
+      vid.addEventListener('seeked', function () {
+        var p = partner();
+        if (p && Math.abs(p.currentTime - vid.currentTime) > 0.05) {
+          p.currentTime = vid.currentTime;
+        }
+      });
+
+      vid.addEventListener('ended', function () {
+        var p = partner();
+        vid.currentTime = 0;
+        if (p) p.currentTime = 0;
+      });
+    });
+
+    /* Comprehensiveness multi-segment player */
+    var ORIG_SRCS = [
+      'materials/videos/Comprehensiveness/original_1tWsTcq6_sY_part1_0000-0031_5s.mp4',
+      'materials/videos/Comprehensiveness/original_1tWsTcq6_sY_part2_0032-0111_5s.mp4',
+      'materials/videos/Comprehensiveness/original_1tWsTcq6_sY_part3_0112-end_10s.mp4'
+    ];
+    var DEG_SRCS = [
+      'materials/videos/Comprehensiveness/degraded_1tWsTcq6_sY_part1_0000-0031_5s.mp4',
+      null,
+      'materials/videos/Comprehensiveness/degraded_1tWsTcq6_sY_part2_0032-end_10s.mp4'
+    ];
+    var ORIG_BADGE = ['Seg 1 / 3', 'Seg 2 / 3', 'Seg 3 / 3'];
+    var DEG_BADGE  = ['Seg 1 / 2', 'Gap', 'Seg 2 / 2'];
+
+    var cOrig      = document.getElementById('comp-orig');
+    var cDeg       = document.getElementById('comp-deg');
+    var cGap       = document.getElementById('comp-gap');
+    var cOrigBadge = document.getElementById('comp-orig-badge');
+    var cDegBadge  = document.getElementById('comp-deg-badge');
+    var cSegs      = document.querySelectorAll('.comp-phase-seg');
+    var cPhase     = 0;
+
+    function isGapPhase() { return DEG_SRCS[cPhase] === null; }
+
+    function compApplyPhase(n, autoPlay) {
+      cPhase = n;
+      cOrig.defaultPlaybackRate = 2;
+      cOrig.src = ORIG_SRCS[n];
+      cOrig.load();
+      cOrigBadge.textContent = ORIG_BADGE[n];
+
+      if (DEG_SRCS[n] === null) {
+        cDeg.pause();
+        cDeg.style.display = 'none';
+        cGap.classList.add('visible');
+        cDegBadge.style.display = 'none';
+      } else {
+        cDeg.defaultPlaybackRate = 2;
+        cDeg.src = DEG_SRCS[n];
+        cDeg.load();
+        cDeg.style.display = 'block';
+        cGap.classList.remove('visible');
+        cDegBadge.style.display = 'block';
+        cDegBadge.textContent = DEG_BADGE[n];
+      }
+
+      cSegs.forEach(function (s) {
+        s.classList.toggle('active', parseInt(s.dataset.cphase) === n);
+      });
+
+      if (autoPlay) {
+        cOrig.play().then(function () {
+          cOrig.playbackRate = 2;
+          if (DEG_SRCS[n] !== null) {
+            cDeg.play().catch(function(){});
+            cDeg.playbackRate = 2;
+          }
+        }).catch(function(){});
+      }
+    }
+
+    /* Phase advance: orig ended */
+    cOrig.addEventListener('ended', function () {
+      if (cPhase < 2) {
+        compApplyPhase(cPhase + 1, true);
+      } else {
+        compApplyPhase(0, false);
+      }
+    });
+
+    /* sync orig -> deg
+       Always guard with isGapPhase() so gap-phase events never touch cDeg */
+    cOrig.addEventListener('play', function () {
+      if (isGapPhase()) return;
+      if (cDeg.paused) cDeg.play().catch(function(){});
+    });
+    cOrig.addEventListener('pause', function () {
+      if (isGapPhase()) return;
+      if (!cDeg.paused) cDeg.pause();
+    });
+    cOrig.addEventListener('seeked', function () {
+      if (isGapPhase()) return;
+      if (Math.abs(cDeg.currentTime - cOrig.currentTime) > 0.05) cDeg.currentTime = cOrig.currentTime;
+    });
+
+    /* sync deg -> orig
+       Guard with isGapPhase() so async pause/play on hidden cDeg never stops cOrig */
+    cDeg.addEventListener('play', function () {
+      if (isGapPhase()) return;
+      if (cOrig.paused) cOrig.play().catch(function(){});
+    });
+    cDeg.addEventListener('pause', function () {
+      if (isGapPhase()) return;
+      if (!cOrig.paused) cOrig.pause();
+    });
+    cDeg.addEventListener('seeked', function () {
+      if (isGapPhase()) return;
+      if (Math.abs(cOrig.currentTime - cDeg.currentTime) > 0.05) cOrig.currentTime = cDeg.currentTime;
+    });
+
+    /* 2x playback rate */
+    document.querySelectorAll('.ve-sync').forEach(function(v) {
+      v.defaultPlaybackRate = 2;
+      v.addEventListener('canplay', function() { v.playbackRate = 2; });
+    });
+    [cOrig, cDeg].forEach(function(v) {
+      v.defaultPlaybackRate = 2;
+      v.addEventListener('canplay', function() { v.playbackRate = 2; });
+    });
+
+    compApplyPhase(0, false);
+  }());
+  </script>
 
 </body>
 
