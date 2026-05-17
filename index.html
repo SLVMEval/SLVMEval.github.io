@@ -393,45 +393,51 @@
 
   /* ── Video Examples ── */
   .ve-group-label {
-    font-size: 0.7rem;
+    font-size: 0.682rem;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
-    padding: 4px 12px;
-    border-radius: 6px;
-    display: inline-block;
-    margin-bottom: 10px;
+    letter-spacing: 0.13em;
+    color: #9ca3af;
+    display: block;
+    margin-bottom: 14px;
+    padding-bottom: 7px;
+    border-bottom: 1px solid #e5e7eb;
+    background: none;
+    border-radius: 0;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
   }
-  .ve-group-label.vq  { color: #4F95DA; background: #eff6ff; border: 1px solid #bfdbfe; }
-  .ve-group-label.vtc { color: #1F5F9B; background: #e8f0f9; border: 1px solid #93c5fd; }
+  .ve-group-label.vq  { color: #6b7280; }
+  .ve-group-label.vtc { color: #6b7280; }
 
   .ve-row {
-    border: 1px solid #e2e8f0;
-    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
     overflow: hidden;
-    margin-bottom: 18px;
-    background: #fafafa;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    margin-bottom: 20px;
+    background: white;
   }
 
   .ve-row-header {
     display: flex;
-    align-items: center;
+    align-items: baseline;
     gap: 10px;
-    padding: 11px 16px;
+    padding: 13px 18px 11px;
     background: white;
-    border-bottom: 1px solid #e2e8f0;
+    border-bottom: 1px solid #f3f4f6;
   }
 
   .ve-aspect-name {
-    font-size: 0.92rem;
-    font-weight: 700;
+    font-size: 1.045rem;
+    font-weight: 600;
     color: #111827;
     font-family: 'Google Sans', sans-serif;
+    letter-spacing: -0.01em;
   }
 
   .ve-badge {
-    font-size: 0.68rem;
+    font-size: 0.748rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.07em;
@@ -447,28 +453,21 @@
   }
 
   .ve-col { display: flex; flex-direction: column; }
-  .ve-col:first-child { border-right: 1px solid #e2e8f0; }
+  .ve-col:first-child { border-right: 1px solid #e5e7eb; }
 
   .ve-col-label {
     text-align: center;
-    font-size: 0.73rem;
-    font-weight: 700;
-    padding: 6px 0;
-    letter-spacing: 0.06em;
+    font-size: 0.748rem;
+    font-weight: 600;
+    padding: 5px 0;
+    letter-spacing: 0.05em;
     text-transform: uppercase;
+    background: #f9fafb;
+    border-bottom: 1px solid #f3f4f6;
   }
 
-  .original-col .ve-col-label {
-    color: #065f46;
-    background: #d1fae5;
-    border-bottom: 1px solid #6ee7b7;
-  }
-
-  .degraded-col .ve-col-label {
-    color: #991b1b;
-    background: #fee2e2;
-    border-bottom: 1px solid #fca5a5;
-  }
+  .original-col .ve-col-label { color: #059669; }
+  .degraded-col .ve-col-label { color: #dc2626; }
 
   .ve-col video {
     width: 100%;
@@ -476,25 +475,50 @@
     background: #000;
   }
 
-  .ve-caption {
-    padding: 11px 16px;
-    font-size: 0.855rem;
+  .ve-degradation {
+    font-size: 0.864rem;
+    color: #6b7280;
+    line-height: 1.6;
+    margin-bottom: 8px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #f3f4f6;
+  }
+  .ve-degradation-label {
+    font-size: 0.693rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    color: #b45309;
+    display: block;
+    margin-bottom: 2px;
+  }
+  .ve-degradation code {
+    font-family: 'SFMono-Regular', 'Menlo', monospace;
+    font-size: 0.847rem;
     color: #374151;
-    line-height: 1.7;
+    background: none;
+    padding: 0;
+  }
+  .ve-caption {
+    padding: 12px 18px;
+    font-size: 0.929rem;
+    color: #374151;
+    line-height: 1.75;
     background: white;
-    border-top: 1px solid #e2e8f0;
+    border-top: 1px solid #f3f4f6;
   }
 
   .ve-caption strong { color: #dc2626; font-weight: 600; }
   .ve-caption em     { color: #6b7280; }
 
   .ve-caption-label {
-    font-size: 0.67rem;
+    font-size: 0.682rem;
     font-weight: 700;
-    color: #9ca3af;
+    color: #374151;
     text-transform: uppercase;
-    letter-spacing: 0.07em;
-    margin-bottom: 4px;
+    letter-spacing: 0.09em;
+    margin-bottom: 3px;
+    display: block;
   }
 
   /* Comprehensiveness custom player */
@@ -508,7 +532,7 @@
     right: 7px;
     background: rgba(0,0,0,0.65);
     color: white;
-    font-size: 0.67rem;
+    font-size: 0.737rem;
     font-weight: 700;
     padding: 3px 8px;
     border-radius: 8px;
@@ -532,8 +556,8 @@
   .comp-gap-overlay.visible { display: flex; }
 
   .comp-gap-icon  { font-size: 2rem; line-height: 1; }
-  .comp-gap-ja    { color: #ef4444; font-size: 0.82rem; font-weight: 700; letter-spacing: 0.08em; }
-  .comp-gap-en    { color: #f87171; font-size: 0.72rem; }
+  .comp-gap-ja    { color: #ef4444; font-size: 0.902rem; font-weight: 700; letter-spacing: 0.08em; }
+  .comp-gap-en    { color: #f87171; font-size: 0.792rem; }
 
   .comp-controls {
     background: #f1f5f9;
@@ -563,7 +587,7 @@
   .comp-phase-seg.active.is-gap   { background: #fef2f2; }
 
   .comp-seg-title {
-    font-size: 0.71rem;
+    font-size: 0.781rem;
     font-weight: 700;
     color: #374151;
     display: block;
@@ -573,14 +597,14 @@
   .comp-phase-seg.active.is-gap .comp-seg-title    { color: #dc2626; }
 
   .comp-seg-orig {
-    font-size: 0.63rem;
+    font-size: 0.693rem;
     color: #059669;
     display: block;
     margin-top: 2px;
   }
 
   .comp-seg-deg  {
-    font-size: 0.63rem;
+    font-size: 0.693rem;
     color: #dc2626;
     display: block;
     margin-top: 1px;
@@ -598,7 +622,7 @@
     border: none;
     border-radius: 8px;
     padding: 7px 22px;
-    font-size: 0.84rem;
+    font-size: 0.924rem;
     font-weight: 600;
     cursor: pointer;
     font-family: 'Google Sans', sans-serif;
@@ -614,7 +638,7 @@
     border: 1.5px solid #cbd5e1;
     border-radius: 8px;
     padding: 6px 14px;
-    font-size: 0.8rem;
+    font-size: 0.88rem;
     font-weight: 600;
     cursor: pointer;
     font-family: 'Google Sans', sans-serif;
@@ -970,6 +994,7 @@
               </div>
             </div>
             <div class="ve-caption">
+              <div class="ve-degradation"><span class="ve-degradation-label">Degradation Operation:</span> Reduce the contrast of selected clips using FFmpeg’s <code>eq</code> filter with contrast set to <code>−0.8</code>.</div>
               <div class="ve-caption-label">Video Description</div>
               The video shows a close-up of a half sandwich and a side of fries with toppings on a wooden serving board. The sandwich appears to be filled with greens and possibly a protein, held in someone's hand. The environment seems casual, potentially a street food setting or a casual dining restaurant. <strong>The light is warm and diffused, casting soft shadows and highlighting the textures of the food.</strong> The colors are primarily the golden brown of the fries, the green of the sandwich filling, and the red and green of the fry seasonings.
             </div>
@@ -995,6 +1020,7 @@
               </div>
             </div>
             <div class="ve-caption">
+              <div class="ve-degradation"><span class="ve-degradation-label">Degradation Operation:</span> Downscale the resolution of selected clips, then upscale back — reducing sharpness and fine detail.</div>
               <div class="ve-caption-label">Video Description</div>
               In a setting that seems like an indoor studio or room with a cozy ambiance, the video features a brown tabby cat named Tweeter. This domestic long-hair cat, indicated to be an 11-year-old spayed female, is wearing a bright yellow tag. The feline appears healthy and well-cared for, with a fluffy fur coat. She sits calmly, being petted by someone off-camera, occasionally turning her head to look around. Her inquisitive nature is highlighted by the voice-over that mentions her keen interest in observing the activities of other animals.
             </div>
@@ -1020,6 +1046,7 @@
               </div>
             </div>
             <div class="ve-caption">
+              <div class="ve-degradation"><span class="ve-degradation-label">Degradation Operation:</span> Apply a mismatched artistic style transfer (cartoon, oil painting, manga, watercolor, or sketch) to selected clips using OpenCV filters.</div>
               <div class="ve-caption-label">Video Description</div>
               The video frames show a street food vendor's display case, likely for selling traditional Vietnamese snacks. Inside the glass display are neatly arranged, segmented compartments filled with various types of sliced foods. We can see crisp-looking green slices, possibly some kind of pickled vegetables, next to off-white and beige slices that could be some form of processed or raw tubers. In the top left corner, there's a basket holding deep-fried items with a golden-brown hue, which the vendor is seen picking up with their gloved hand.
             </div>
@@ -1045,6 +1072,7 @@
               </div>
             </div>
             <div class="ve-caption">
+              <div class="ve-degradation"><span class="ve-degradation-label">Degradation Operation:</span> Remove original backgrounds using <code>rembg</code>, then replace them with randomly sampled landscape images from the nature-dataset.</div>
               <div class="ve-caption-label">Video Description</div>
               The clip opens with a close-up of hands holding a small item, possibly food, with a focus on the textures and colors of the item and skin. <strong>The background is indistinct, highlighting the subject's action.</strong> The scene cuts to a wider shot featuring a group of people outdoors under a clear sky, with one holding an object high above, which is indicated as a 'potato'. The environment is lively, and the lighting suggests daytime. The colors are vibrant with diverse clothing styles hinting at cultural diversity.
             </div>
@@ -1070,6 +1098,7 @@
               </div>
             </div>
             <div class="ve-caption">
+              <div class="ve-degradation"><span class="ve-degradation-label">Degradation Operation:</span> Extract object names from prompts, localize them with Grounding DINO, then erase them via Stable-Diffusion-Inpainting.</div>
               <div class="ve-caption-label">Video Description</div>
               The clip features a medium close-up of a <strong>person seated inside a vehicle</strong>, likely to emphasize the subject and the vehicle's interior features. The person is wearing a grey polo shirt with a red logo on the left side, gesturing with their hands to emphasize the wide range of vehicle accessories available. Their actions suggest they are explaining how customizable these vehicles are. The vehicle interior is black, with visible branding 'VHT-X' on the seat and a clear view of the vehicle's steering column and door frame.
             </div>
@@ -1098,6 +1127,7 @@
               </div>
             </div>
             <div class="ve-caption">
+              <div class="ve-degradation"><span class="ve-degradation-label">Degradation Operation:</span> Identify clips mentioning object colors from the prompt, then modify the colors of those objects in all frames using Qwen-Image-Edit.</div>
               <div class="ve-caption-label">Video Description</div>
               The clip opens with a full-screen <strong>blue</strong> background featuring the ESA (European Space Agency) logo in white. The ESA logo consists of a circular design with an array of lines and dots forming what appears to be a stylized 'E' within a globe representation. Then additional elements appear: the logos of NASA, JAXA (Japan Aerospace Exploration Agency), Roscosmos (Russian space agency), and CSA (Canadian Space Agency) line up alongside ESA's logo. <strong>The color palette is mainly blue and white</strong>, with some touches of national colors in the various space agencies' logos.
             </div>
@@ -1123,6 +1153,7 @@
               </div>
             </div>
             <div class="ve-caption">
+              <div class="ve-degradation"><span class="ve-degradation-label">Degradation Operation:</span> Identify motion-related clips from the prompt, then replace each frame in those clips with the middle frame — effectively producing a static clip.</div>
               <div class="ve-caption-label">Video Description</div>
               The video showcases a hermit crab with a grey, patterned shell moving across a sandy surface, likely at Dry Tortugas National Park. The crab's shell appears large relative to its body, suggesting it's an adult. As <strong>the crab moves</strong>, its legs and claws are visible, displaying reddish-brown colors that contrast with its pale shell. <strong>The focus remains solely on the crab's movement and behavior as it navigates the terrain.</strong> The scene is devoid of human activity, highlighting the natural habitat of the creature.
             </div>
@@ -1181,6 +1212,7 @@
               </div>
             </div>
             <div class="ve-caption">
+              <div class="ve-degradation"><span class="ve-degradation-label">Degradation Operation:</span> Randomly remove 5 clips from the original video, reducing coverage of all prompt-described events.</div>
               <div class="ve-caption-label">Video Description</div>
               The individual, wearing a long-sleeve black shirt and jeans, stands on a dimly lit stage with a casual posture, holding what appears to be a remote or clicker. There are two birch tree stumps of different heights positioned to the speaker's left. To the right, there is a white bench with vertical slats, suggesting a simple, nature-inspired set design. The stage floor is dark, contrasting with the lighter backdrop. The colors are muted with blacks, whites, and greys dominating the scene. <em>The degraded version removes the middle segment, leaving only 2 of the original 3 segments (Seg 2 is missing from the degraded video).</em>
             </div>
@@ -1206,6 +1238,7 @@
               </div>
             </div>
             <div class="ve-caption">
+              <div class="ve-degradation"><span class="ve-degradation-label">Degradation Operation:</span> Identify clips mentioning left/right spatial relations, then horizontally flip all frames in those clips.</div>
               <div class="ve-caption-label">Video Description</div>
               The video shows a detailed view of a toy, specifically a Kamen Rider Gaim's Sengoku Driver with an attached Genesis Core on the <strong>left</strong> side. The driver is predominantly black with metallic and gold accents, displaying an LED screen reading '5.13' and a handle on the right. In the background, there is a nondescript beige wall. The light source appears to be coming from the front, illuminating the toy evenly without harsh shadows. In the last frame, a hand is inserting a pink and blue lockseed into the right side of the driver.
             </div>
@@ -1231,6 +1264,7 @@
               </div>
             </div>
             <div class="ve-caption">
+              <div class="ve-degradation"><span class="ve-degradation-label">Degradation Operation:</span> Move 5 consecutive clips to random positions, thereby breaking the temporal order of events.</div>
               <div class="ve-caption-label">Video Description</div>
               A close-up shot focuses on the torso of <strong>an individual wearing a black utility vest with multiple pockets and attachments</strong>. The person appears to be holding an electronic device, possibly a tablet, which has a logo resembling a flame, and is housed in a black protective case with clips. A pen is also visible, secured on the vest. The vest has a velcro patch area but no discernible patches attached. The individual's other hand is partially visible, holding the tablet or adjusting its position. The vest and tablet are predominantly black, providing a stark contrast to the white background.
             </div>
